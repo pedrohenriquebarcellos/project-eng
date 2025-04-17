@@ -58,7 +58,7 @@ export default function LoginForm() {
                 }
             })
 
-            await new Promise((resolve) => setTimeout(resolve, 2000000))
+            await new Promise((resolve) => setTimeout(resolve, 2000))
 
             const user = response.data.find(
                 (user) => user.userName === data.userName && user.password === data.password

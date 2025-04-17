@@ -3,7 +3,7 @@
 import * as zod from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SearchFormContainer, ErrorMessage } from "./styles"
+import { SearchFormContainer, ErrorMessage, Spinner } from "./styles"
 import { api } from '@/lib/axios';
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
@@ -15,8 +15,8 @@ interface User {
 }
 
 const loginFormSchema = zod.object({
-    userName: zod.string().min(1, {message: 'Informe o usuário'}),
-    password: zod.string().min(5, { message: 'Quantidade de caracteres mínima: 5'})
+    userName: zod.string().min(1, { message: 'Informe o usuário' }),
+    password: zod.string().min(5, { message: 'Quantidade de caracteres mínima: 5' })
 })
 
 type LoginFormInputs = zod.infer<typeof loginFormSchema>;
@@ -24,12 +24,14 @@ type LoginFormInputs = zod.infer<typeof loginFormSchema>;
 export default function LoginForm() {
     const router = useRouter()
     const [loginError, setLoginError] = useState('')
-    const { 
-        register, 
-        handleSubmit, 
+    const [isLoading, setIsLoading] = useState(false)
+
+    const {
+        register,
+        handleSubmit,
         watch,
         reset,
-        formState: { errors } 
+        formState: { errors }
     } = useForm<LoginFormInputs>({
         resolver: zodResolver(loginFormSchema),
         mode: 'onSubmit',
@@ -43,11 +45,12 @@ export default function LoginForm() {
     const taskUsername = watch('userName')
     const taskPassword = watch('password')
 
-    const isSubmitDisabled = !taskUsername && !taskPassword
+    const isSubmitDisabled = (!taskUsername && !taskPassword) || isLoading
 
     async function handleLogin(data: LoginFormInputs) {
         try {
             setLoginError('')
+            setIsLoading(true)
 
             const response = await api.get<User[]>('/users', {
                 params: {
@@ -55,39 +58,44 @@ export default function LoginForm() {
                 }
             })
 
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+
             const user = response.data.find(
                 (user) => user.userName === data.userName && user.password === data.password
             )
 
-            if (user) {
+            if (user) {                
                 router.push('/dashboard')
+                return
             } else {
+                setIsLoading(false)
                 setLoginError('Usuário ou senha inválidos')
                 reset()
             }
 
         } catch (error: any) {
             console.error('Erro no login: ', error)
+            setIsLoading(false)
             reset()
-        }
+        } 
     }
 
     return (
         <SearchFormContainer onSubmit={handleSubmit(handleLogin)}>
             <legend>Login</legend>
-            <input 
+            <input
                 type="text"
                 placeholder='Insira seu usuário'
                 {...register('userName')}
             />
-            
+
             <ErrorMessage>{
                 errors.userName?.message && (
                     errors.userName.message
                 )}
-            </ErrorMessage>            
+            </ErrorMessage>
 
-            <input 
+            <input
                 type="password"
                 placeholder='Senha'
                 {...register('password')}
@@ -97,16 +105,16 @@ export default function LoginForm() {
                 errors.password?.message && (
                     errors.password.message
                 )}
-            </ErrorMessage>   
+            </ErrorMessage>
 
-            {loginError && 
-                <ErrorMessage style={{color: 'red'}}>
+            {loginError &&
+                <ErrorMessage style={{ color: 'red' }}>
                     {loginError}
                 </ErrorMessage>
             }
 
             <button type='submit' disabled={isSubmitDisabled}>
-                Login
+                {isLoading ? <Spinner /> : 'Login'}
             </button>
         </SearchFormContainer>
     )

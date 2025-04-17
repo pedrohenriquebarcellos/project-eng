@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const SearchFormContainer = styled.form`
   display: flex;
@@ -43,6 +43,10 @@ export const SearchFormContainer = styled.form`
   }
 
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     padding: 1rem;
     border: none;
     border-radius: 8px;
@@ -78,3 +82,22 @@ export const ErrorMessage = styled.span`
     }
   }
 `;
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`
+
+export const Spinner = styled.div`
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #555;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: ${spin} 0.6s linear infinite;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+`

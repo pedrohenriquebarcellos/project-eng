@@ -33,6 +33,7 @@ export default function LoginForm() {
     } = useForm<LoginFormInputs>({
         resolver: zodResolver(loginFormSchema),
         mode: 'onSubmit',
+        reValidateMode: 'onSubmit',
         defaultValues: {
             userName: '',
             password: '',

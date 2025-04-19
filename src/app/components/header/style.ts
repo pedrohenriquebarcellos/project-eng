@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as Popover from "@radix-ui/react-popover"
 
 export const HeaderContainer = styled.header`
     width: 100%;
@@ -19,5 +20,11 @@ export const HeaderContainer = styled.header`
         text-align: center;
         flex: 1;
     }
+`;
+
+export const Content = styled(Popover.Content)`
+    padding: 1rem;
+    border-radius: 8px;
+    background: ${props => props.theme['white']};
 `;
 

@@ -6,12 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SearchFormContainer, ErrorMessage, Spinner } from "./styles"
 import { api } from '@/lib/axios';
 import { useRouter } from 'next/navigation'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from '@/contexts/LoginContext';
 
 interface User {
     id: number,
     userName: string,
     password: string,
+}
+
+type ErrorLoginFormMessage = {
+    message: string
 }
 
 const loginFormSchema = zod.object({
@@ -22,6 +27,7 @@ const loginFormSchema = zod.object({
 type LoginFormInputs = zod.infer<typeof loginFormSchema>;
 
 export default function LoginForm() {
+    const { handleGetInitialsFromName } = useContext(UserContext)
     const router = useRouter()
     const [loginError, setLoginError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -64,7 +70,10 @@ export default function LoginForm() {
                 (user) => user.userName === data.userName && user.password === data.password
             )
 
-            if (user) {                
+            if (user) {     
+                localStorage.setItem('userName', JSON.stringify(user.userName))
+                handleGetInitialsFromName(user.userName)
+
                 router.push('/dashboard')
                 return
             } else {
@@ -73,8 +82,14 @@ export default function LoginForm() {
                 reset()
             }
 
-        } catch (error: any) {
-            console.error('Erro no login: ', error)
+        } catch (error: unknown) {
+            let errorMessage: ErrorLoginFormMessage = { message: 'Erro ao fazer login' }
+
+            if (error instanceof Error) {
+                errorMessage = { message: error.message }
+            }
+
+            setLoginError(errorMessage.message)
             setIsLoading(false)
             reset()
         } 

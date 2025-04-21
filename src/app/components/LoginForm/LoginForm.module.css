@@ -1,0 +1,111 @@
+.searchFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  padding: 3rem 2rem;
+  margin: 4rem auto;
+  border-radius: 16px;
+
+  background: #18181B;
+  backdrop-filter: blur(10px);
+  border: 1px solid #00875F;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.searchFormContainer legend {
+  margin: 0 auto;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00B37E;
+}
+
+.searchFormContainer input {
+  border-radius: 8px;
+  border: 1px solid #29292E; 
+  background: #202024; 
+  color: #E1E1E6;
+  padding: 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.searchFormContainer input::placeholder {
+  color: #7C7C8A;
+  font-style: italic;
+}
+
+.searchFormContainer input:-webkit-autofill,
+.searchFormContainer input:-webkit-autofill:hover, 
+.searchFormContainer input:-webkit-autofill:focus, 
+.searchFormContainer input:-webkit-autofill:active,
+.searchFormContainer input:autofill,
+.searchFormContainer input:focus, {
+  outline: none;
+  border-color: #00B37E;
+  box-shadow: 0 0 0 2px rgba(0, 183, 126, 0.2); 
+}
+
+.searchFormContainer button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: #00875F;
+  color: #fff; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.searchFormContainer button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.searchFormContainer button:not(:disabled):hover {
+  background-color: #00B37E;
+}
+
+.errorMessage {
+  color: #F75A68;
+  font-size: 0.875rem;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #555;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.6s linear infinite;
+  transition: transform 0.2s ease;
+}
+
+.spinner:hover {
+  transform: scale(1.1);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,6 +1,6 @@
 "use client"
 
-import { ActionsContainer, ErrorMessage, FieldsWrapper, GroupFields, RegisterFormContainer } from "./styles";
+import styles from './registerForm.module.css';
 import * as zod from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,221 +36,218 @@ export default function RegisterForm() {
         resolver: zodResolver(registerFormSchema)
     });
     return (
-        <RegisterFormContainer onSubmit={handleSubmit((data) => {
+        <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit((data) => {
             console.log(data);
             reset();
-        })}>            
+        })}>             
             <fieldset>    
                 <legend>Informações da Empresa</legend>            
-                <GroupFields>
+                <div className={styles.groupFields}>
                     <label htmlFor="cnpj" className="required">CNPJ</label>
                     <input 
                         type="text" 
                         placeholder="CNPJ" 
                         {...register('cnpj')}
-                        className={'required'}
                     />
-                   <ErrorMessage>
+                   <span className={styles.errorMessage}>
                     {errors.cnpj?.message && (
                         errors.cnpj.message
                     )}
-                    </ErrorMessage>
-                </GroupFields>
-                <GroupFields>
+                    </span>
+                </div>
+                <div className={styles.groupFields}>
                     <label htmlFor="companyName" className="required">Nome da Empresa</label>
                     <input 
                         type="text" 
                         placeholder="Nome da Empresa" 
                         {...register('companyName')}
-                        className={'required'}
                     />
-                    <ErrorMessage>
+                    <span className={styles.errorMessage}>
                         {errors.companyName?.message && (
                             errors.companyName.message
                         )}
-                    </ErrorMessage>
-                </GroupFields>
-                <GroupFields>
-                    <FieldsWrapper flex="2">
+                    </span>
+                </div>
+                <div className={styles.groupFields}>
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyAddressStreet" className="required">Endereço da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Endereço" 
                             {...register('companyAddressStreet')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyAddressStreet?.message && (
                                 errors.companyAddressStreet.message
                             )}
-                        </ErrorMessage>                        
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="1">
+                        </span>                        
+                    </div>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyAddressDistrict" className="required">Número do Endereço</label>
                         <input 
                             type="text" 
                             placeholder="Número do Endereço" 
                             {...register('companyAddressDistrict')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyAddressDistrict?.message && (
                                 errors.companyAddressDistrict.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>                    
-                </GroupFields>
-                <GroupFields>
-                    <FieldsWrapper flex="2">
+                        </span>
+                    </div>                    
+                </div>                    
+                <div className={styles.groupFields}>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyLegalName" className="required">Nome Fantasia da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Nome Fantasia" 
                             {...register('companyLegalName')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyLegalName?.message && (
                                 errors.companyLegalName.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>                        
-                    <FieldsWrapper flex="1">
+                        </span>                        
+                    </div>                        
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyType" className="required">Tipo da Empresa</label>
-                        <select {...register('companyType')} className={'required'}>
+                        <select {...register('companyType')}>
                             <option value="matriz">Matriz</option>
                             <option value="filial">Filial</option>
                         </select>
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyType?.message && (
                                 errors.companyType.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>
-                </GroupFields>
+                        </span>
+                    </div>
+                </div>
             </fieldset>
 
             <fieldset>
                 <legend>Endereço da Empresa</legend>
-                <GroupFields>
-                    <FieldsWrapper flex="2">
+                <div className={styles.groupFields}>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyCEP" className="required">CEP da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="CEP" 
                             {...register('companyCEP')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyCEP?.message && (
                                 errors.companyCEP.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="1">
+                        </span>
+                    </div>
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyState" className="required">Estado da Empresa</label>
                         <input
                             type="text"
                             placeholder="Estado"
                             {...register('companyState')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyState?.message && (
                                 errors.companyState.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="1">
+                        </span>
+                    </div>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyCityCode" className="required">Código da Cidade</label>
                         <input 
                             type="text" 
                             placeholder="Código da Cidade" 
                             {...register('companyCityCode')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyCityCode?.message && (
                                 errors.companyCityCode.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>
-                </GroupFields>
-                <GroupFields>
-                    <FieldsWrapper flex="2">
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.groupFields}>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyCity" className="required">Cidade da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Cidade" 
                             {...register('companyCity')}
-                            className={'required'}
                         />
-                        <ErrorMessage>
+                        <span className={styles.errorMessage}>
                             {errors.companyCity?.message && (
                                 errors.companyCity.message
                             )}
-                        </ErrorMessage>
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="1">
+                        </span>
+                    </div>
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyRegion">Região da Empresa</label>
                         <input
                             type="text"
                             placeholder="Região"
                             {...register('companyRegion')}
                         />
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="1">
+                    </div>
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyCountry">País da Empresa</label>
                         <input
                             type="text"
                             placeholder="País"      
                             {...register('companyCountry')}
                         />
-                    </FieldsWrapper>
-                </GroupFields>
-                <GroupFields>
-                    <FieldsWrapper flex="1">
+                    </div>
+                </div>
+                <div className={styles.groupFields}>
+                    <div className={styles.fieldsWrapper}>
                         <label htmlFor="companyPhoneCode" className="required">Código do Telefone da Empresa</label>
                         <input                        
                             type="text"
                             placeholder="Código do Telefone"
                             {...register('companyPhoneCode')}
-                            className={'required'}
                         />
-                        {errors.companyPhoneCode && <ErrorMessage>{errors.companyPhoneCode.message}</ErrorMessage>}
-                    </FieldsWrapper>
-                    <FieldsWrapper flex="2">
+                        <span className={styles.errorMessage}>
+                            {errors.companyPhoneCode?.message && (
+                                errors.companyPhoneCode.message
+                            )}
+                        </span>
+                    </div>
+                    <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyPhone" className="required">Telefone da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Telefone" 
                             {...register('companyPhone')}
-                            className={'required'}
                         />
-                        {errors.companyPhone && <ErrorMessage>{errors.companyPhone.message}</ErrorMessage>}
-                    </FieldsWrapper>
-                </GroupFields>
-                <GroupFields>
+                        <span className={styles.errorMessage}>
+                            {errors.companyPhone?.message && (
+                                errors.companyPhone.message
+                            )}
+                        </span>
+                    </div>
+                </div>
+                <div className={styles.groupFields}>
                     <label htmlFor="companyBirthDate">Data de Nascimento da Empresa</label>
                     <input 
                         type="text" 
                         placeholder="Data de Nascimento" 
                         {...register('companyBirthDate')}
                     />
-                </GroupFields>
-                <GroupFields>
+                </div>
+                <div className={styles.groupFields}>
                     <label htmlFor="companyHomePage">Site da Empresa</label>
                     <input
                         type="text"
                         placeholder="Site"
                         {...register('companyHomePage')}
                     />
-                </GroupFields>
+                </div>
             </fieldset>
-            <ActionsContainer>
+            <div className={styles.actionsContainer}>
                 <button type="submit">Cadastrar</button>
                 <button type="reset" onClick={() => reset()}>Limpar</button>
-            </ActionsContainer>
-        </RegisterFormContainer>
+            </div>
+        </form>
     )
 }

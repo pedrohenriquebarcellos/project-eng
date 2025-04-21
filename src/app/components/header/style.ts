@@ -20,6 +20,12 @@ export const HeaderContainer = styled.header`
         text-align: center;
         flex: 1;
     }
+
+    @media screen and (max-width: 768px) {
+        small {
+            display: none;
+        }
+    }
 `;
 
 export const Content = styled(Popover.Content)`

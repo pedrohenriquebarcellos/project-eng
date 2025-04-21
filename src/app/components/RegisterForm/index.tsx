@@ -2,8 +2,10 @@
 
 import styles from './registerForm.module.css';
 import * as zod from 'zod';
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { IMaskInput } from 'react-imask';
+import { getCNPJData } from '../GetCNPJData';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
@@ -31,10 +33,19 @@ export default function RegisterForm() {
         register,
         reset, 
         handleSubmit,
+        control,
         formState: { errors } 
     } = useForm<RegisterFormInputs>({
         resolver: zodResolver(registerFormSchema)
     });
+
+    const handleCNPJChange = async (cnpj: string) => {
+        const cleanedCNPJ = cnpj.replace(/\D/g, '');
+        console.log('cleanedCNPJ -> ', cleanedCNPJ)
+        const data = await getCNPJData(cleanedCNPJ);
+        console.log('data from cnpj -> ', data)
+    }
+
     return (
         <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit((data) => {
             console.log(data);
@@ -44,10 +55,18 @@ export default function RegisterForm() {
                 <legend>Informações da Empresa</legend>            
                 <div className={styles.groupFields}>
                     <label htmlFor="cnpj" className={styles.required}>CNPJ</label>
-                    <input 
-                        type="text" 
-                        placeholder="CNPJ" 
-                        {...register('cnpj')}
+                    <Controller
+                        name="cnpj"
+                        control={control}
+                        render={({ field }) => (
+                            <IMaskInput
+                                {...field}
+                                mask="00.000.000/0000-00"
+                                placeholder="CNPJ"
+                                onAccept={(value) => field.onChange(value)}
+                                onBlur={() => handleCNPJChange(field.value)}
+                            />
+                        )}
                     />
                    <span className={styles.errorMessage}>
                     {errors.cnpj?.message && (
@@ -130,10 +149,17 @@ export default function RegisterForm() {
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyCEP" className={styles.required}>CEP da Empresa</label>
-                        <input 
-                            type="text" 
-                            placeholder="CEP" 
-                            {...register('companyCEP')}
+                        <Controller 
+                            name="companyCEP"
+                            control={control}
+                            render={({ field }) => (
+                                <IMaskInput
+                                    {...field}
+                                    mask="00000-000"
+                                    placeholder="CEP"
+                                    onAccept={(value) => field.onChange(value)}
+                                />
+                            )}
                         />
                         <span className={styles.errorMessage}>
                             {errors.companyCEP?.message && (
@@ -215,10 +241,17 @@ export default function RegisterForm() {
                     </div>
                     <div className={styles.fieldsWrapper2}>
                         <label htmlFor="companyPhone" className={styles.required}>Telefone da Empresa</label>
-                        <input 
-                            type="text" 
-                            placeholder="Telefone" 
-                            {...register('companyPhone')}
+                        <Controller 
+                            name="companyPhone"
+                            control={control}
+                            render={({ field }) => (
+                                <IMaskInput
+                                    {...field}
+                                    mask="00000-0000"
+                                    placeholder="Telefone"
+                                    onAccept={(value) => field.onChange(value)}
+                                />
+                            )}
                         />
                         <span className={styles.errorMessage}>
                             {errors.companyPhone?.message && (

@@ -43,7 +43,7 @@ export default function RegisterForm() {
             <fieldset>    
                 <legend>Informações da Empresa</legend>            
                 <div className={styles.groupFields}>
-                    <label htmlFor="cnpj" className="required">CNPJ</label>
+                    <label htmlFor="cnpj" className={styles.required}>CNPJ</label>
                     <input 
                         type="text" 
                         placeholder="CNPJ" 
@@ -56,7 +56,7 @@ export default function RegisterForm() {
                     </span>
                 </div>
                 <div className={styles.groupFields}>
-                    <label htmlFor="companyName" className="required">Nome da Empresa</label>
+                    <label htmlFor="companyName" className={styles.required}>Nome da Empresa</label>
                     <input 
                         type="text" 
                         placeholder="Nome da Empresa" 
@@ -70,7 +70,7 @@ export default function RegisterForm() {
                 </div>
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyAddressStreet" className="required">Endereço da Empresa</label>
+                        <label htmlFor="companyAddressStreet" className={styles.required}>Endereço da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Endereço" 
@@ -83,7 +83,7 @@ export default function RegisterForm() {
                         </span>                        
                     </div>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyAddressDistrict" className="required">Número do Endereço</label>
+                        <label htmlFor="companyAddressDistrict" className={styles.required}>Número do Endereço</label>
                         <input 
                             type="text" 
                             placeholder="Número do Endereço" 
@@ -98,7 +98,7 @@ export default function RegisterForm() {
                 </div>                    
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyLegalName" className="required">Nome Fantasia da Empresa</label>
+                        <label htmlFor="companyLegalName" className={styles.required}>Nome Fantasia da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Nome Fantasia" 
@@ -111,7 +111,7 @@ export default function RegisterForm() {
                         </span>                        
                     </div>                        
                     <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyType" className="required">Tipo da Empresa</label>
+                        <label htmlFor="companyType" className={styles.required}>Tipo da Empresa</label>
                         <select {...register('companyType')}>
                             <option value="matriz">Matriz</option>
                             <option value="filial">Filial</option>
@@ -129,7 +129,7 @@ export default function RegisterForm() {
                 <legend>Endereço da Empresa</legend>
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCEP" className="required">CEP da Empresa</label>
+                        <label htmlFor="companyCEP" className={styles.required}>CEP da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="CEP" 
@@ -142,7 +142,7 @@ export default function RegisterForm() {
                         </span>
                     </div>
                     <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyState" className="required">Estado da Empresa</label>
+                        <label htmlFor="companyState" className={styles.required}>Estado da Empresa</label>
                         <input
                             type="text"
                             placeholder="Estado"
@@ -155,7 +155,7 @@ export default function RegisterForm() {
                         </span>
                     </div>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCityCode" className="required">Código da Cidade</label>
+                        <label htmlFor="companyCityCode" className={styles.required}>Código da Cidade</label>
                         <input 
                             type="text" 
                             placeholder="Código da Cidade" 
@@ -170,7 +170,7 @@ export default function RegisterForm() {
                 </div>
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCity" className="required">Cidade da Empresa</label>
+                        <label htmlFor="companyCity" className={styles.required}>Cidade da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Cidade" 
@@ -201,7 +201,7 @@ export default function RegisterForm() {
                 </div>
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyPhoneCode" className="required">Código do Telefone da Empresa</label>
+                        <label htmlFor="companyPhoneCode" className={styles.required}>Código do Telefone da Empresa</label>
                         <input                        
                             type="text"
                             placeholder="Código do Telefone"
@@ -214,7 +214,7 @@ export default function RegisterForm() {
                         </span>
                     </div>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyPhone" className="required">Telefone da Empresa</label>
+                        <label htmlFor="companyPhone" className={styles.required}>Telefone da Empresa</label>
                         <input 
                             type="text" 
                             placeholder="Telefone" 

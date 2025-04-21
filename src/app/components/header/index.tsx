@@ -37,7 +37,12 @@ export default function Header() {
                             transition={{ duration: 0.3 }}
                             className='animate-pulse text-gray-400'
                         >
-                            <Spinner size={24} className="animate-spin text-gray-400" />
+                            <Spinner 
+                                size={24} 
+                                className="
+                                    animate-spin text-gray-400
+                                " 
+                            />
                         </motion.span>
                     )}
                     {(userName && !isUserLoading) && (
@@ -50,7 +55,12 @@ export default function Header() {
                         >
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <span className='text-3xl font-bold underline cursor-pointer'>{userName}</span>
+                                <span className="
+                                    relative inline-flex items-center gap-1 text-3xl font-bold cursor-pointer
+                                    after:content-['▼'] after:text-base after:inline-block after:ml-1
+                                ">
+                                    {userName}
+                                </span>
                                 </PopoverTrigger>
                                 <PopoverContent
                                     align="center"

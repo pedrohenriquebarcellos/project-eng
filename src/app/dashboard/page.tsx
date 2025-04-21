@@ -10,19 +10,19 @@ export default function Dashboard() {
             <nav className={styles.navWrapper}>
                 <ul>
                     <li>
-                        <Link href="/cadastrar">
+                        <Link href="/register">
                             <UserCirclePlus size={48} />
                             <span>Cadastrar</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/editar">
+                        <Link href="/edit">
                             <Pen size={48} />
                             <span>Editar Cadastro</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/listar">
+                        <Link href="/list">
                             <UsersThree size={48} />
                             <span>Listar</span>
                         </Link>

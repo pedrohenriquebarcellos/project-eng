@@ -1,14 +1,35 @@
 import styled, { keyframes } from "styled-components";
 
-export const SearchFormContainer = styled.form`
+export const RegisterFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 500px;
+  max-width: 1024px;
   width: 100%;
   padding: 3rem 2rem;
   margin: 4rem auto;
   border-radius: 16px;
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    legend {
+      text-decoration: underline;
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    padding: 2rem 1rem;
+    margin: 2rem auto;
+  }
 
   background: ${props => props.theme['gray-800']};
   backdrop-filter: blur(10px);
@@ -22,7 +43,10 @@ export const SearchFormContainer = styled.form`
     color: ${props => props.theme['green-300']};
   }
 
+  select,
   input {
+    margin: 0.5rem 0;
+    width: 100%;
     border-radius: 8px;
     border: 1px solid ${props => props.theme['gray-700']};
     background: ${props => props.theme['gray-800']};
@@ -69,6 +93,44 @@ export const SearchFormContainer = styled.form`
   }
 `;
 
+export const GroupFields = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0 1rem;
+  flex-wrap: wrap;
+  margin: 0;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;    
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: ${props => props.theme['gray-400']};    
+
+    &.required {
+      &::after {
+        content: '*';
+        color: ${props => props.theme['red-300']};
+        margin-left: 0.25rem;
+      }
+    }
+  }
+`;
+
+export const FieldsWrapper = styled.div<{ flex?: string }>`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: ${ ({flex}) => flex || '1' };
+
+  @media screen and (max-width: 768px) {
+    flex: 1 1 100%;
+  }
+`;
 
 export const ErrorMessage = styled.span`
   color: ${props => props.theme['red-300']};
@@ -102,3 +164,22 @@ export const Spinner = styled.div`
     transform: scale(1.1);
   }
 `
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  
+  button {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+`;

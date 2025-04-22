@@ -1,9 +1,29 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "userName": "john.doe",
-            "password": "password123"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "userName": "john.doe",
+      "password": "password123"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "cnpj": "47960950000121",
+      "companyAddressStreet": "RUA VOLUNTARIOS DA FRANCA 1465",
+      "companyAddressDistrict": "CENTRO",
+      "companyLegalName": "MAGAZINE LUIZA",
+      "companyType": "matriz",
+      "companyCEP": "14400-490",
+      "companyState": "São Paulo",
+      "companyCityCode": "3516200",
+      "companyCity": "Franca",
+      "companyRegion": "Sudeste",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "16",
+      "companyPhone": "37112-002",
+      "companyBirthDate": "1966-10-24",
+      "companyHomePage": ""
+    }
+  ]
 }

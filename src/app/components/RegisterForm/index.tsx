@@ -1,9 +1,12 @@
 import styles from './registerForm.module.css';
 import * as zod from 'zod';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IMaskInput } from 'react-imask';
 import { getCNPJData } from '../GetCNPJData';
+import CNPJInput from './Fields/CNPJ';
+import AddressInfo from './Fields/AddressFields';
+import CompanyInfo from './Fields/CompanyFields';
+import { api } from '@/lib/axios';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
@@ -11,18 +14,38 @@ const registerFormSchema = zod.object({
     companyAddressStreet: zod.string().min(1, { message: 'Informe o endereço da empresa' }),
     companyAddressDistrict: zod.string().min(1, { message: 'Informe o número do endereço da empresa' }),
     companyLegalName: zod.string().min(1, { message: 'Informe o nome fantasia da empresa' }),
+
     companyType: zod.string().min(1, { message: 'Informe o tipo da empresa' }),
     companyCEP: zod.string().min(9, { message: 'Informe o CEP da empresa' }),
     companyState: zod.string().min(1, { message: 'Informe o estado da empresa' }),
     companyCityCode: zod.string().min(1, { message: 'Informe o código da cidade da empresa' }),
     companyCity: zod.string().min(1, { message: 'Informe a cidade da empresa' }),
-    companyRegion: zod.string().min(1, { message: 'Informe a região da empresa' }),
+    companyRegion: zod.string().min(0),
     companyCountry: zod.string().min(1, { message: 'Informe o país da empresa' }),
     companyPhoneCode: zod.string().min(1, { message: 'Informe o código do telefone da empresa' }),
     companyPhone: zod.string().min(1, { message: 'Informe o telefone da empresa' }),
     companyBirthDate: zod.string().min(1, { message: 'Informe a data de nascimento da empresa' }),
-    companyHomePage: zod.string().min(1, { message: 'Informe o site da empresa' }),
+    companyHomePage: zod.string().min(0),
 })
+
+interface NewRegisterFormInputs {
+    cnpj: string;
+    companyName: string;
+    companyAddressStreet: string;
+    companyAddressDistrict: string;
+    companyLegalName: string;
+    companyType: string;
+    companyCEP: string;
+    companyState: string;
+    companyCityCode: string;
+    companyCity: string;
+    companyRegion: string;
+    companyCountry: string;
+    companyPhoneCode: string;
+    companyPhone: string;
+    companyBirthDate: string;
+    companyHomePage: string;
+}
 
 type RegisterFormInputs = zod.infer<typeof registerFormSchema>;
 
@@ -40,7 +63,34 @@ export default function RegisterForm() {
         resolver: zodResolver(registerFormSchema)
     });
 
+    function mapCNPJDataToForm(data: any, setValue: any) {
+        setValue('companyName', data?.razao_social ?? '');
+        setValue('companyAddressStreet', 
+            [
+                data?.estabelecimento?.tipo_logradouro,
+                data?.estabelecimento?.logradouro,
+                data?.estabelecimento?.numero
+            ]
+            .filter(Boolean)
+            .join(' ')
+            .trim()
+        )
+        setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
+        setValue('companyLegalName', data?.estabelecimento?.nome_fantasia ?? '');
+        setValue('companyType', data?.estabelecimento?.tipo?.toLowerCase() ?? '');
+        setValue('companyCEP', String(data?.estabelecimento?.cep ?? ''));
+        setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
+        setValue('companyCityCode', String(data?.estabelecimento?.cidade?.ibge_id ?? ''));
+        setValue('companyCity', data?.estabelecimento?.cidade?.nome ?? '');
+        setValue('companyCountry', data?.estabelecimento?.pais?.nome ?? '');
+        setValue('companyPhoneCode', data?.estabelecimento?.ddd1 ?? '');
+        setValue('companyPhone', data?.estabelecimento?.telefone1 ?? '');
+        setValue('companyBirthDate', data?.estabelecimento?.data_inicio_atividade ?? '');
+    }
+
     const handleCNPJChange = async (cnpj: string) => {
+        if (!cnpj) return;
+        
         const cleanedCNPJ = cnpj.replace(/\D/g, '');
         const data = await getCNPJData(cleanedCNPJ);
 
@@ -54,29 +104,8 @@ export default function RegisterForm() {
             }
 
             clearErrors('cnpj');
-            setValue('companyName', data?.razao_social ?? '');
-            setValue('companyAddressStreet', 
-                [
-                    data?.estabelecimento?.tipo_logradouro,
-                    data?.estabelecimento?.logradouro,
-                    data?.estabelecimento?.numero
-                ]
-                .filter(Boolean)
-                .join(' ')
-                .trim()
-            )
-            setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
-            setValue('companyLegalName', data?.estabelecimento?.nome_fantasia ?? '');
-            setValue('companyType', data?.estabelecimento?.tipo?.toLowerCase() ?? '');
-            setValue('companyCEP', data?.estabelecimento?.cep ?? '');
-            setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
-            setValue('companyCityCode', data?.estabelecimento?.cidade?.ibge_id ?? '');
-            setValue('companyCity', data?.estabelecimento?.cidade?.nome ?? '');
-            setValue('companyCountry', data?.estabelecimento?.pais?.nome ?? '');
-            setValue('companyPhoneCode', data?.estabelecimento?.ddd1 ?? '');
-            setValue('companyPhone', data?.estabelecimento?.telefone1 ?? '');
-            setValue('companyBirthDate', data?.estabelecimento?.data_inicio_atividade ?? '');
-            console.log('data from cnpj -> ', data)
+            mapCNPJDataToForm(data, setValue);
+            
         } catch (error) {
             console.error('Error setting CNPJ data:', error);
 
@@ -88,236 +117,63 @@ export default function RegisterForm() {
         }
     }
 
+    async function generateSequentialId() {
+        const response = await api.get('/companies');
+        const companies = response.data;
+        
+        const ids = companies.map((c: any) => c.id);
+        const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+        
+        return maxId + 1;
+    }
+
+    async function handleCreateNewRegister(data: NewRegisterFormInputs) {
+        const cleanedCNPJ = data.cnpj.replace(/\D/g, '');
+        const newId = await generateSequentialId();
+
+        const response = await api.post('/companies', {
+            id: newId,
+            cnpj: cleanedCNPJ,
+            companyAddressStreet: data.companyAddressStreet,
+            companyAddressDistrict: data.companyAddressDistrict,
+            companyLegalName: data.companyLegalName,
+            companyType: data.companyType,
+            companyCEP: data.companyCEP,
+            companyState: data.companyState,
+            companyCityCode: data.companyCityCode,
+            companyCity: data.companyCity,
+            companyRegion: data.companyRegion,
+            companyCountry: data.companyCountry,
+            companyPhoneCode: data.companyPhoneCode,
+            companyPhone: data.companyPhone,
+            companyBirthDate: data.companyBirthDate,
+            companyHomePage: data.companyHomePage,
+        })
+
+        reset();
+    };
+
     return (
-        <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit((data) => {
-            console.log(data);
-            reset();
-        })}>             
+        <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit(handleCreateNewRegister)}>             
             <fieldset>    
                 <legend>Informações da Empresa</legend>            
-                <div className={styles.groupFields}>
-                    <label htmlFor="cnpj" className={styles.required}>CNPJ</label>
-                    <Controller
-                        name="cnpj"
-                        control={control}
-                        render={({ field }) => (
-                            <IMaskInput
-                                {...field}
-                                mask="00.000.000/0000-00"
-                                placeholder="CNPJ"
-                                onAccept={(value) => field.onChange(value)}
-                                onBlur={() => handleCNPJChange(field.value)}
-                            />
-                        )}
-                    />
-                   <span className={styles.errorMessage}>
-                    {errors.cnpj?.message && (
-                        errors.cnpj.message
-                    )}
-                    </span>
-                </div>
-                <div className={styles.groupFields}>
-                    <label htmlFor="companyName" className={styles.required}>Nome da Empresa</label>
-                    <input 
-                        type="text" 
-                        placeholder="Nome da Empresa" 
-                        {...register('companyName')}
-                    />
-                    <span className={styles.errorMessage}>
-                        {errors.companyName?.message && (
-                            errors.companyName.message
-                        )}
-                    </span>
-                </div>
-                <div className={styles.groupFields}>
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyAddressStreet" className={styles.required}>Endereço</label>
-                        <input 
-                            type="text" 
-                            placeholder="Endereço" 
-                            {...register('companyAddressStreet')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyAddressStreet?.message && (
-                                errors.companyAddressStreet.message
-                            )}
-                        </span>                        
-                    </div>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyAddressDistrict" className={styles.required}>Bairro</label>
-                        <input 
-                            type="text" 
-                            placeholder="Bairro" 
-                            {...register('companyAddressDistrict')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyAddressDistrict?.message && (
-                                errors.companyAddressDistrict.message
-                            )}
-                        </span>
-                    </div>                    
-                </div>                    
-                <div className={styles.groupFields}>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyLegalName" className={styles.required}>Nome Fantasia</label>
-                        <input 
-                            type="text" 
-                            placeholder="Nome Fantasia" 
-                            {...register('companyLegalName')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyLegalName?.message && (
-                                errors.companyLegalName.message
-                            )}
-                        </span>                        
-                    </div>                        
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyType" className={styles.required}>Tipo da Empresa</label>
-                        <select {...register('companyType')}>
-                            <option value="matriz">Matriz</option>
-                            <option value="filial">Filial</option>
-                        </select>
-                        <span className={styles.errorMessage}>
-                            {errors.companyType?.message && (
-                                errors.companyType.message
-                            )}
-                        </span>
-                    </div>
-                </div>
+                <CNPJInput
+                    control={control}
+                    setError={setError}
+                    clearErrors={clearErrors}
+                    handleCNPJChange={handleCNPJChange}
+                    errors={errors}
+                />
+                <AddressInfo register={register} errors={errors} />
             </fieldset>
 
             <fieldset>
                 <legend>Endereço da Empresa</legend>
-                <div className={styles.groupFields}>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCEP" className={styles.required}>CEP da Empresa</label>
-                        <Controller 
-                            name="companyCEP"
-                            control={control}
-                            render={({ field }) => (
-                                <IMaskInput
-                                    {...field}
-                                    mask="00000-000"
-                                    placeholder="CEP"
-                                    onAccept={(value) => field.onChange(value)}
-                                />
-                            )}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyCEP?.message && (
-                                errors.companyCEP.message
-                            )}
-                        </span>
-                    </div>
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyState" className={styles.required}>Estado da Empresa</label>
-                        <input
-                            type="text"
-                            placeholder="Estado"
-                            {...register('companyState')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyState?.message && (
-                                errors.companyState.message
-                            )}
-                        </span>
-                    </div>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCityCode" className={styles.required}>Código da Cidade</label>
-                        <input 
-                            type="text" 
-                            placeholder="Código da Cidade" 
-                            {...register('companyCityCode')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyCityCode?.message && (
-                                errors.companyCityCode.message
-                            )}
-                        </span>
-                    </div>
-                </div>
-                <div className={styles.groupFields}>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyCity" className={styles.required}>Cidade da Empresa</label>
-                        <input 
-                            type="text" 
-                            placeholder="Cidade" 
-                            {...register('companyCity')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyCity?.message && (
-                                errors.companyCity.message
-                            )}
-                        </span>
-                    </div>
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyRegion">Região da Empresa</label>
-                        <input
-                            type="text"
-                            placeholder="Região"
-                            {...register('companyRegion')}
-                        />
-                    </div>
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyCountry">País da Empresa</label>
-                        <input
-                            type="text"
-                            placeholder="País"      
-                            {...register('companyCountry')}
-                        />
-                    </div>
-                </div>
-                <div className={styles.groupFields}>
-                    <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyPhoneCode" className={styles.required}>Código do Telefone da Empresa</label>
-                        <input                        
-                            type="text"
-                            placeholder="Código do Telefone"
-                            {...register('companyPhoneCode')}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyPhoneCode?.message && (
-                                errors.companyPhoneCode.message
-                            )}
-                        </span>
-                    </div>
-                    <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyPhone" className={styles.required}>Telefone da Empresa</label>
-                        <Controller 
-                            name="companyPhone"
-                            control={control}
-                            render={({ field }) => (
-                                <IMaskInput
-                                    {...field}
-                                    mask="00000-0000"
-                                    placeholder="Telefone"
-                                    onAccept={(value) => field.onChange(value)}
-                                />
-                            )}
-                        />
-                        <span className={styles.errorMessage}>
-                            {errors.companyPhone?.message && (
-                                errors.companyPhone.message
-                            )}
-                        </span>
-                    </div>
-                </div>
-                <div className={styles.groupFields}>
-                    <label htmlFor="companyBirthDate">Data de Nascimento da Empresa</label>
-                    <input 
-                        type="text" 
-                        placeholder="Data de Nascimento" 
-                        {...register('companyBirthDate')}
-                    />
-                </div>
-                <div className={styles.groupFields}>
-                    <label htmlFor="companyHomePage">Site da Empresa</label>
-                    <input
-                        type="text"
-                        placeholder="Site"
-                        {...register('companyHomePage')}
-                    />
-                </div>
+                <CompanyInfo 
+                    register={register} 
+                    control={control} 
+                    errors={errors} 
+                />
             </fieldset>
             <div className={styles.actionsContainer}>
                 <button type="submit">Cadastrar</button>

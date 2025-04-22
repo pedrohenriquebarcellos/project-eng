@@ -1,0 +1,46 @@
+.groupFields {
+    display: flex;
+    flex-direction: row;
+    gap: 0 1rem;
+    flex-wrap: wrap;
+    margin: 0;
+}
+  
+.groupFields label {
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #8D8D99;
+}
+
+.required::after {
+    content: '*';
+    color: #F75A68;
+    margin-left: 0.25rem;
+    font-weight: bold;
+}
+
+.errorMessage {
+    color: #F75A68;
+    font-size: 0.875rem;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.fieldsWrapper {
+    flex: 1;
+}
+
+.fieldsWrapperFlex2 {
+    flex: 2;
+}
+
+.fieldsWrapperFlex3 {
+    flex: 3;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

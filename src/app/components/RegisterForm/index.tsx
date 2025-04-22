@@ -53,20 +53,22 @@ type RegisterFormInputs = zod.infer<typeof registerFormSchema>;
 
 export default function RegisterForm() {
     const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [savedData, setSavedData] = useState<NewRegisterFormInputs | null>(null);
 
     useEffect(() => {
-        
+
     }, []);
 
-    const { 
+    const {
         setError,
         clearErrors,
         setValue,
         register,
-        reset, 
+        reset,
         handleSubmit,
         control,
-        formState: { errors } 
+        formState: { errors }
     } = useForm<RegisterFormInputs>({
         shouldFocusError: false,
         resolver: zodResolver(registerFormSchema)
@@ -74,15 +76,15 @@ export default function RegisterForm() {
 
     function mapCNPJDataToForm(data: any, setValue: any) {
         setValue('companyName', data?.razao_social ?? '');
-        setValue('companyAddressStreet', 
+        setValue('companyAddressStreet',
             [
                 data?.estabelecimento?.tipo_logradouro,
                 data?.estabelecimento?.logradouro,
                 data?.estabelecimento?.numero
             ]
-            .filter(Boolean)
-            .join(' ')
-            .trim()
+                .filter(Boolean)
+                .join(' ')
+                .trim()
         )
         setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
         setValue('companyLegalName', data?.estabelecimento?.nome_fantasia ?? '');
@@ -101,7 +103,7 @@ export default function RegisterForm() {
         if (!cnpj) return;
 
         setIsLoading(true);
-        
+
         const cleanedCNPJ = cnpj.replace(/\D/g, '');
         const data = await getCNPJData(cleanedCNPJ);
 
@@ -118,7 +120,7 @@ export default function RegisterForm() {
 
             clearErrors('cnpj');
             mapCNPJDataToForm(data, setValue);
-            
+
             setIsLoading(false);
         } catch (error) {
             console.error('Error setting CNPJ data:', error);
@@ -136,10 +138,10 @@ export default function RegisterForm() {
     async function generateSequentialId() {
         const response = await api.get('/companies');
         const companies = response.data;
-        
+
         const ids = companies.map((c: any) => c.id);
         const maxId = ids.length > 0 ? Math.max(...ids) : 0;
-        
+
         return maxId + 1;
     }
 
@@ -168,41 +170,86 @@ export default function RegisterForm() {
             companyHomePage: data.companyHomePage,
         })
 
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+
+        setSavedData(data);
         reset();
         setIsLoading(false);
+        setIsSuccess(true);
     };
 
     return (
-        <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit(handleCreateNewRegister)}>             
-            {isLoading && (
-                <div className={styles.overlay}>
-                    <Spinner size={48} className={styles.spinner} />
+        <>
+            {!isSuccess && (
+                <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit(handleCreateNewRegister)}>
+                    {isLoading && (
+                        <div className={styles.overlay}>
+                            <Spinner size={48} className={styles.spinner} />
+                        </div>
+                    )}
+                    <fieldset>
+                        <legend>Informações da Empresa</legend>
+                        <CNPJInput
+                            control={control}
+                            setError={setError}
+                            clearErrors={clearErrors}
+                            handleCNPJChange={handleCNPJChange}
+                            errors={errors}
+                        />
+                        <AddressInfo register={register} errors={errors} />
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Endereço da Empresa</legend>
+                        <CompanyInfo
+                            register={register}
+                            control={control}
+                            errors={errors}
+                        />
+                    </fieldset>
+                    <div className={styles.actionsContainer}>
+                        <button type="submit">Cadastrar</button>
+                        <button type="reset" onClick={() => reset()}>Limpar</button>
+                    </div>
+                </form>
+            )}
+            {isSuccess && savedData && (
+                <div>
+                    {/* Mensagem de sucesso */}
+                    <div className={styles.successMessage}>
+                        <h2>Cadastro realizado com sucesso!</h2>
+                        <p>Os dados da empresa foram registrados com sucesso.</p>
+                    </div>
+
+                    {/* Dados exibidos após o sucesso */}
+                    <div className={styles.successDataContainer}>
+                        <div className={styles.dataItem}>
+                            <span>Nome da Empresa:</span>
+                            <span>{savedData.companyLegalName}</span>
+                        </div>
+                        <div className={styles.dataItem}>
+                            <span>CNPJ:</span>
+                            <span>{savedData.cnpj}</span>
+                        </div>
+                        <div className={styles.dataItem}>
+                            <span>Endereço:</span>
+                            <span>{savedData.companyAddressStreet}, {savedData.companyAddressDistrict}</span>
+                        </div>
+                        <div className={styles.dataItem}>
+                            <span>Telefone:</span>
+                            <span>{savedData.companyPhone}</span>
+                        </div>
+                        <div className={styles.dataItem}>
+                            <span>Cidade:</span>
+                            <span>{savedData.companyCity}</span>
+                        </div>
+                        <div className={styles.dataItem}>
+                            <span>Estado:</span>
+                            <span>{savedData.companyState}</span>
+                        </div>
+                    </div>
                 </div>
             )}
-            <fieldset>    
-                <legend>Informações da Empresa</legend>            
-                <CNPJInput
-                    control={control}
-                    setError={setError}
-                    clearErrors={clearErrors}
-                    handleCNPJChange={handleCNPJChange}
-                    errors={errors}
-                />
-                <AddressInfo register={register} errors={errors} />
-            </fieldset>
-
-            <fieldset>
-                <legend>Endereço da Empresa</legend>
-                <CompanyInfo 
-                    register={register} 
-                    control={control} 
-                    errors={errors} 
-                />
-            </fieldset>
-            <div className={styles.actionsContainer}>
-                <button type="submit">Cadastrar</button>
-                <button type="reset" onClick={() => reset()}>Limpar</button>
-            </div>
-        </form>
+        </>
     )
 }

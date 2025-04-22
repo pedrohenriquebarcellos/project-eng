@@ -5,13 +5,14 @@ export async function getCNPJData(cnpj: string) {
         try {
             const response = await cnpjApi.get(`/cnpj/${cnpj}`);
             const data = response.data;
-            console.log(data)
             return data;
 
-        } catch (error) {
+        } catch (error: any) {
+            if (error.response && error.response.status === 404) {
+                return { error: error.response.data.detalhes ?? 'CNPJ inválido'}
+            }
 
-            console.error('Error fetching CNPJ data:', error);
-            return null;
+            return { error: 'Erro ao buscar dados do CNPJ' };
         }
     }
 

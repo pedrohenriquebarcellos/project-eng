@@ -1,5 +1,3 @@
-"use client"
-
 import styles from './registerForm.module.css';
 import * as zod from 'zod';
 import { useForm, Controller } from "react-hook-form";
@@ -30,6 +28,9 @@ type RegisterFormInputs = zod.infer<typeof registerFormSchema>;
 
 export default function RegisterForm() {
     const { 
+        setError,
+        clearErrors,
+        setValue,
         register,
         reset, 
         handleSubmit,
@@ -41,9 +42,50 @@ export default function RegisterForm() {
 
     const handleCNPJChange = async (cnpj: string) => {
         const cleanedCNPJ = cnpj.replace(/\D/g, '');
-        console.log('cleanedCNPJ -> ', cleanedCNPJ)
         const data = await getCNPJData(cleanedCNPJ);
-        console.log('data from cnpj -> ', data)
+
+        try {
+            if (data?.error) {
+                setError('cnpj', {
+                    type: 'manual',
+                    message: data.error
+                })
+                return;
+            }
+
+            clearErrors('cnpj');
+            setValue('companyName', data?.razao_social ?? '');
+            setValue('companyAddressStreet', 
+                [
+                    data?.estabelecimento?.tipo_logradouro,
+                    data?.estabelecimento?.logradouro,
+                    data?.estabelecimento?.numero
+                ]
+                .filter(Boolean)
+                .join(' ')
+                .trim()
+            )
+            setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
+            setValue('companyLegalName', data?.estabelecimento?.nome_fantasia ?? '');
+            setValue('companyType', data?.estabelecimento?.tipo?.toLowerCase() ?? '');
+            setValue('companyCEP', data?.estabelecimento?.cep ?? '');
+            setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
+            setValue('companyCityCode', data?.estabelecimento?.cidade?.ibge_id ?? '');
+            setValue('companyCity', data?.estabelecimento?.cidade?.nome ?? '');
+            setValue('companyCountry', data?.estabelecimento?.pais?.nome ?? '');
+            setValue('companyPhoneCode', data?.estabelecimento?.ddd1 ?? '');
+            setValue('companyPhone', data?.estabelecimento?.telefone1 ?? '');
+            setValue('companyBirthDate', data?.estabelecimento?.data_inicio_atividade ?? '');
+            console.log('data from cnpj -> ', data)
+        } catch (error) {
+            console.error('Error setting CNPJ data:', error);
+
+            setError('cnpj', {
+                type: 'manual',
+                message: 'Erro ao buscar dados do CNPJ'
+            })
+            reset();
+        }
     }
 
     return (
@@ -89,7 +131,7 @@ export default function RegisterForm() {
                 </div>
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper}>
-                        <label htmlFor="companyAddressStreet" className={styles.required}>Endereço da Empresa</label>
+                        <label htmlFor="companyAddressStreet" className={styles.required}>Endereço</label>
                         <input 
                             type="text" 
                             placeholder="Endereço" 
@@ -102,10 +144,10 @@ export default function RegisterForm() {
                         </span>                        
                     </div>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyAddressDistrict" className={styles.required}>Número do Endereço</label>
+                        <label htmlFor="companyAddressDistrict" className={styles.required}>Bairro</label>
                         <input 
                             type="text" 
-                            placeholder="Número do Endereço" 
+                            placeholder="Bairro" 
                             {...register('companyAddressDistrict')}
                         />
                         <span className={styles.errorMessage}>
@@ -117,7 +159,7 @@ export default function RegisterForm() {
                 </div>                    
                 <div className={styles.groupFields}>
                     <div className={styles.fieldsWrapper2}>
-                        <label htmlFor="companyLegalName" className={styles.required}>Nome Fantasia da Empresa</label>
+                        <label htmlFor="companyLegalName" className={styles.required}>Nome Fantasia</label>
                         <input 
                             type="text" 
                             placeholder="Nome Fantasia" 

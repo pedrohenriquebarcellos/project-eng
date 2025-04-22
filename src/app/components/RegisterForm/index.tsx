@@ -7,6 +7,8 @@ import CNPJInput from './Fields/CNPJ';
 import AddressInfo from './Fields/AddressFields';
 import CompanyInfo from './Fields/CompanyFields';
 import { api } from '@/lib/axios';
+import { useEffect, useState } from 'react';
+import { Spinner } from 'phosphor-react';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
@@ -50,6 +52,12 @@ interface NewRegisterFormInputs {
 type RegisterFormInputs = zod.infer<typeof registerFormSchema>;
 
 export default function RegisterForm() {
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        
+    }, []);
+
     const { 
         setError,
         clearErrors,
@@ -60,6 +68,7 @@ export default function RegisterForm() {
         control,
         formState: { errors } 
     } = useForm<RegisterFormInputs>({
+        shouldFocusError: false,
         resolver: zodResolver(registerFormSchema)
     });
 
@@ -90,6 +99,8 @@ export default function RegisterForm() {
 
     const handleCNPJChange = async (cnpj: string) => {
         if (!cnpj) return;
+
+        setIsLoading(true);
         
         const cleanedCNPJ = cnpj.replace(/\D/g, '');
         const data = await getCNPJData(cleanedCNPJ);
@@ -100,12 +111,15 @@ export default function RegisterForm() {
                     type: 'manual',
                     message: data.error
                 })
+
+                setIsLoading(false);
                 return;
             }
 
             clearErrors('cnpj');
             mapCNPJDataToForm(data, setValue);
             
+            setIsLoading(false);
         } catch (error) {
             console.error('Error setting CNPJ data:', error);
 
@@ -115,6 +129,8 @@ export default function RegisterForm() {
             })
             reset();
         }
+
+        setIsLoading(false);
     }
 
     async function generateSequentialId() {
@@ -128,6 +144,8 @@ export default function RegisterForm() {
     }
 
     async function handleCreateNewRegister(data: NewRegisterFormInputs) {
+        setIsLoading(true);
+
         const cleanedCNPJ = data.cnpj.replace(/\D/g, '');
         const newId = await generateSequentialId();
 
@@ -151,10 +169,16 @@ export default function RegisterForm() {
         })
 
         reset();
+        setIsLoading(false);
     };
 
     return (
         <form autoComplete="off" className={styles.registerFormContainer} onSubmit={handleSubmit(handleCreateNewRegister)}>             
+            {isLoading && (
+                <div className={styles.overlay}>
+                    <Spinner size={48} className={styles.spinner} />
+                </div>
+            )}
             <fieldset>    
                 <legend>Informações da Empresa</legend>            
                 <CNPJInput

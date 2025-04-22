@@ -22,6 +22,7 @@ export default function CNPJInput({ control, setError, clearErrors, handleCNPJCh
                     {...field}
                     mask="00.000.000/0000-00"
                     placeholder="CNPJ"
+                    inputRef={field.ref}
                     onAccept={(value) => field.onChange(value)}
                     onBlur={() => handleCNPJChange(field.value)}
                 />

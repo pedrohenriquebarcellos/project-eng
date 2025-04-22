@@ -1,22 +1,24 @@
 import styles from "./companyForm.module.css";
-import { Controller } from "react-hook-form";
+import { Controller, FieldErrors } from "react-hook-form";
 import { IMaskInput } from "react-imask";
+
+interface FormValues {
+    companyCEP?: string;
+    companyState?: string;
+    companyCityCode?: string;
+    companyCity?: string;
+    companyRegion?: string;
+    companyCountry?: string;
+    companyPhoneCode?: string;
+    companyPhone?: string;
+    companyBirthDate?: string;
+    companyHomePage?: string;
+}
 
 interface CompanyInfoProps {
     control: any;
     register: any;
-    errors: {
-        companyCEP?: { message?: string };
-        companyState?: { message?: string };
-        companyCityCode?: { message?: string };
-        companyCity?: { message?: string };
-        companyRegion?: { message?: string };
-        companyCountry?: { message?: string };
-        companyPhoneCode?: { message?: string };
-        companyPhone?: { message?: string };
-        companyBirthDate?: { message?: string };
-        companyHomePage?: { message?: string };
-    }
+    errors: FieldErrors<FormValues>;
 }
 
 export default function CompanyInfo({ register, control, errors }: CompanyInfoProps) {
@@ -33,6 +35,7 @@ export default function CompanyInfo({ register, control, errors }: CompanyInfoPr
                                 {...field}
                                 mask="00000-000"
                                 placeholder="CEP"
+                                inputRef={field.ref}
                                 onAccept={(value) => field.onChange(value)}
                             />
                         )}
@@ -125,6 +128,7 @@ export default function CompanyInfo({ register, control, errors }: CompanyInfoPr
                                 {...field}
                                 mask="00000-0000"
                                 placeholder="Telefone"
+                                inputRef={field.ref}
                                 onAccept={(value) => field.onChange(value)}
                             />
                         )}

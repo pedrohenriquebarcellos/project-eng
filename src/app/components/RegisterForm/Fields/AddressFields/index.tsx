@@ -72,6 +72,7 @@ export default function AddressInfo({ register, errors}: AddressFieldsProps) {
                 <div className={styles.fieldsWrapper}>
                     <label htmlFor="companyType" className={styles.required}>Tipo da Empresa</label>
                     <select {...register('companyType')}>
+                        <option value="">Selecione o tipo</option>
                         <option value="matriz">Matriz</option>
                         <option value="filial">Filial</option>
                     </select>

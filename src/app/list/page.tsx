@@ -93,7 +93,7 @@ export default function ListPage() {
         <section className={styles.wrapper}>
             <input
                 type="text"
-                placeholder="Pesquisar por CNPJ, Nome ou Cidade"
+                placeholder="Pesquisar por CNPJ, Fantasia ou Cidade"
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 className={styles.searchInput}
@@ -103,6 +103,8 @@ export default function ListPage() {
                 <>
                     <ul className={styles.rowHeader}>
                         <li>ID</li>
+                        <li>Loja:</li>
+                        <li>Tipo:</li>
                         <li>CNPJ</li>
                         <li>Nome</li>
                         <li>Cidade</li>
@@ -116,8 +118,10 @@ export default function ListPage() {
                             style={{ cursor: 'pointer' }}
                         >
                             <li className={styles.cell} data-label="ID">{company.id}</li>
+                            <li className={styles.cell} data-label="Nº Loja">{company.companyStoreIdNumber}</li>
+                            <li className={styles.cell} data-label="Tipo">{company.companyType}</li>
                             <li className={styles.cell} data-label="CNPJ">{company.cnpj}</li>
-                            <li className={styles.cell} data-label="Nome">{company.companyLegalName}</li>
+                            <li className={styles.cell} data-label="Nome">{company.companyFantasyName}</li>
                             <li className={styles.cell} data-label="Cidade">{company.companyCity}</li>
                         </ul>
                     ))}

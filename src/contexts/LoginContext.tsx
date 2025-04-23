@@ -21,7 +21,6 @@ export function LoginProvider({ children }: UserProviderProps) {
     const [isUserLoading, setIsUserLoading] = useState(true);
 
     const handleGetInitialsFromName = (name: string | null) => {
-        console.log('handleGetInitialsFromName', name);
         if (!name) {
             setUserName(null);
             return;

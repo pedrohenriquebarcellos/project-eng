@@ -7,6 +7,7 @@ export type Company = {
     companyAddressStreet: string;
     companyAddressDistrict: string;
     companyLegalName: string;
+    companyStoreIdNumber: number;
     companyType: string;
     companyCEP: string;
     companyState: string;

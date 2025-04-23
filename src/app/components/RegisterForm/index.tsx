@@ -24,7 +24,7 @@ const registerFormSchema = zod.object({
     companyCityCode: zod.string().min(1, { message: 'Informe o código da cidade da empresa' }),
     companyCity: zod.string().min(1, { message: 'Informe a cidade da empresa' }),
     companyRegion: zod.string().min(0),
-    companyCountry: zod.string().min(1, { message: 'Informe o país da empresa' }),
+    companyCountry: zod.string().min(0, { message: 'Informe o país da empresa' }),
     companyPhoneCode: zod.string().min(1, { message: 'Informe o código do telefone da empresa' }),
     companyPhone: zod.string().min(1, { message: 'Informe o telefone da empresa' }),
     companyBirthDate: zod.string().min(1, { message: 'Informe a data de nascimento da empresa' }),
@@ -146,6 +146,19 @@ export default function RegisterForm() {
         return maxId + 1;
     }
 
+    async function checkStoreId(cnpj: string) {
+        const response = await api.get('/companies');
+        const companies = response.data;
+
+        const firstEightNumbersOfCnpj = cnpj.substring(0,8);
+        console.log(firstEightNumbersOfCnpj)
+        const existingCompanies = companies.filter((company: any) =>
+            company.cnpj.substring(0, 8) === firstEightNumbersOfCnpj
+        );
+
+        return (existingCompanies === 0) ? 1 : existingCompanies.length + 1; 
+    }
+
     async function handleCreateNewRegister(data: NewRegisterFormInputs) {
         setIsLoading(true);
 
@@ -164,9 +177,12 @@ export default function RegisterForm() {
             return;
         }
 
+        const idStore = await checkStoreId(cleanedCNPJ)
+
         const response = await api.post('/companies', {
             id: newId,
             cnpj: cleanedCNPJ,
+            companyStoreIdNumber: idStore,
             companyAddressStreet: data.companyAddressStreet,
             companyAddressDistrict: data.companyAddressDistrict,
             companyFantasyName: data.companyFantasyName,

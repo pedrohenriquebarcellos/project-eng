@@ -114,6 +114,42 @@
       "companyPhone": "31703-633",
       "companyBirthDate": "1971-09-15",
       "companyHomePage": ""
+    },
+    {
+      "id": 7,
+      "cnpj": "10457626000185",
+      "companyAddressStreet": "AVENIDA DAS AMERICAS 2603",
+      "companyAddressDistrict": "BARRA DA TIJUCA",
+      "companyLegalName": "COLEGIO ANGLO-AMERICANO",
+      "companyType": "matriz",
+      "companyCEP": "22631-002",
+      "companyState": "Rio de Janeiro",
+      "companyCityCode": "3304557",
+      "companyCity": "Rio de Janeiro",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "21",
+      "companyPhone": "33889-100",
+      "companyBirthDate": "2008-10-21",
+      "companyHomePage": ""
+    },
+    {
+      "id": 8,
+      "cnpj": "06099229000101",
+      "companyAddressStreet": "AVENIDA PAULISTA 900",
+      "companyAddressDistrict": "BELA VISTA",
+      "companyLegalName": "UNIVERSIDADE PAULISTA - UNIP",
+      "companyType": "matriz",
+      "companyCEP": "01310-100",
+      "companyState": "São Paulo",
+      "companyCityCode": "3550308",
+      "companyCity": "São Paulo",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "11",
+      "companyPhone": "31703-700",
+      "companyBirthDate": "2004-02-04",
+      "companyHomePage": ""
     }
   ]
 }

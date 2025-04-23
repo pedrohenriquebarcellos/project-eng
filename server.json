@@ -78,6 +78,42 @@
       "companyPhone": "37695-731",
       "companyBirthDate": "1972-06-22",
       "companyHomePage": ""
+    },
+    {
+      "id": 5,
+      "cnpj": "62823257000109",
+      "companyAddressStreet": "RUA DOS ANDRADAS 140",
+      "companyAddressDistrict": "SANTA EFIGENIA",
+      "companyLegalName": "ADMINISTRACAO CENTRAL",
+      "companyType": "matriz",
+      "companyCEP": "01208-000",
+      "companyState": "São Paulo",
+      "companyCityCode": "3550308",
+      "companyCity": "São Paulo",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "11",
+      "companyPhone": "33243-571",
+      "companyBirthDate": "1970-06-04",
+      "companyHomePage": ""
+    },
+    {
+      "id": 6,
+      "cnpj": "43144138000177",
+      "companyAddressStreet": "AVENIDA PAULISTA 900",
+      "companyAddressDistrict": "BELA VISTA",
+      "companyLegalName": "COLEGIO OBJETIVO",
+      "companyType": "matriz",
+      "companyCEP": "01310-100",
+      "companyState": "São Paulo",
+      "companyCityCode": "3550308",
+      "companyCity": "São Paulo",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "11",
+      "companyPhone": "31703-633",
+      "companyBirthDate": "1971-09-15",
+      "companyHomePage": ""
     }
   ]
 }

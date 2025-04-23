@@ -9,6 +9,7 @@ import CompanyInfo from './Fields/CompanyFields';
 import { api } from '@/lib/axios';
 import { useEffect, useState } from 'react';
 import { Spinner } from 'phosphor-react';
+import BtnBack from '../BtnBack';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
@@ -151,6 +152,18 @@ export default function RegisterForm() {
         const cleanedCNPJ = data.cnpj.replace(/\D/g, '');
         const newId = await generateSequentialId();
 
+        const companies = await api.get(`/companies`);
+        const existingCompany = companies.data.find((company: any) => company.cnpj === cleanedCNPJ);
+
+        if (existingCompany) {
+            setError('cnpj', {
+                type: 'manual',
+                message: 'CNPJ já cadastrado'
+            })
+            setIsLoading(false);
+            return;
+        }
+
         const response = await api.post('/companies', {
             id: newId,
             cnpj: cleanedCNPJ,
@@ -214,41 +227,42 @@ export default function RegisterForm() {
                 </form>
             )}
             {isSuccess && savedData && (
-                <div>
-                    {/* Mensagem de sucesso */}
-                    <div className={styles.successMessage}>
-                        <h2>Cadastro realizado com sucesso!</h2>
-                        <p>Os dados da empresa foram registrados com sucesso.</p>
+                <>
+                    <div>
+                        <div className={styles.successMessage}>
+                            <h2>Cadastro realizado com sucesso!</h2>
+                            <p>Os dados da empresa foram registrados com sucesso.</p>
+                        </div>
+                        
+                        <div className={styles.successDataContainer}>
+                            <div className={styles.dataItem}>
+                                <span>Nome da Empresa:</span>
+                                <span>{savedData.companyLegalName}</span>
+                            </div>
+                            <div className={styles.dataItem}>
+                                <span>CNPJ:</span>
+                                <span>{savedData.cnpj}</span>
+                            </div>
+                            <div className={styles.dataItem}>
+                                <span>Endereço:</span>
+                                <span>{savedData.companyAddressStreet}, {savedData.companyAddressDistrict}</span>
+                            </div>
+                            <div className={styles.dataItem}>
+                                <span>Telefone:</span>
+                                <span>{savedData.companyPhone}</span>
+                            </div>
+                            <div className={styles.dataItem}>
+                                <span>Cidade:</span>
+                                <span>{savedData.companyCity}</span>
+                            </div>
+                            <div className={styles.dataItem}>
+                                <span>Estado:</span>
+                                <span>{savedData.companyState}</span>
+                            </div>
+                        </div>
                     </div>
-
-                    {/* Dados exibidos após o sucesso */}
-                    <div className={styles.successDataContainer}>
-                        <div className={styles.dataItem}>
-                            <span>Nome da Empresa:</span>
-                            <span>{savedData.companyLegalName}</span>
-                        </div>
-                        <div className={styles.dataItem}>
-                            <span>CNPJ:</span>
-                            <span>{savedData.cnpj}</span>
-                        </div>
-                        <div className={styles.dataItem}>
-                            <span>Endereço:</span>
-                            <span>{savedData.companyAddressStreet}, {savedData.companyAddressDistrict}</span>
-                        </div>
-                        <div className={styles.dataItem}>
-                            <span>Telefone:</span>
-                            <span>{savedData.companyPhone}</span>
-                        </div>
-                        <div className={styles.dataItem}>
-                            <span>Cidade:</span>
-                            <span>{savedData.companyCity}</span>
-                        </div>
-                        <div className={styles.dataItem}>
-                            <span>Estado:</span>
-                            <span>{savedData.companyState}</span>
-                        </div>
-                    </div>
-                </div>
+                    <BtnBack href="/dashboard" />
+                </>
             )}
         </>
     )

@@ -41,7 +41,7 @@
 .searchFormContainer input:-webkit-autofill:focus, 
 .searchFormContainer input:-webkit-autofill:active,
 .searchFormContainer input:autofill,
-.searchFormContainer input:focus, {
+.searchFormContainer input:focus {
   outline: none;
   border-color: #00B37E;
   box-shadow: 0 0 0 2px rgba(0, 183, 126, 0.2); 

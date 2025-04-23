@@ -9,6 +9,7 @@
   "companies": [
     {
       "id": 1,
+      "companyFantasyName": "Magazine Luiza",
       "cnpj": "47960950000121",
       "companyAddressStreet": "RUA VOLUNTARIOS DA FRANCA 1465",
       "companyAddressDistrict": "CENTRO",
@@ -27,6 +28,7 @@
     },
     {
       "id": 2,
+      "companyFantasyName": "TV SBT",
       "cnpj": "45039237000114",
       "companyAddressStreet": "AVENIDA AVENIDA DAS COMUNICACOES, 1147 1147",
       "companyAddressDistrict": "INDUSTRIAL ANHANGUERA",
@@ -45,6 +47,7 @@
     },
     {
       "id": 3,
+      "companyFantasyName": "GLOBO.COM",
       "cnpj": "27865757000102",
       "companyAddressStreet": "RUA LOPES QUINTAS 303",
       "companyAddressDistrict": "JARDIM BOTANICO",
@@ -63,6 +66,7 @@
     },
     {
       "id": 4,
+      "companyFantasyName": "Drogaraia",
       "cnpj": "61585865000151",
       "companyAddressStreet": "AVENIDA CORIFEU DE AZEVEDO MARQUES 3097 3097",
       "companyAddressDistrict": "VILA BUTANTA",
@@ -81,6 +85,7 @@
     },
     {
       "id": 5,
+      "companyFantasyName": "FATEC",
       "cnpj": "62823257000109",
       "companyAddressStreet": "RUA DOS ANDRADAS 140",
       "companyAddressDistrict": "SANTA EFIGENIA",
@@ -99,6 +104,7 @@
     },
     {
       "id": 6,
+      "companyFantasyName": "Colégio Objetivo",
       "cnpj": "43144138000177",
       "companyAddressStreet": "AVENIDA PAULISTA 900",
       "companyAddressDistrict": "BELA VISTA",
@@ -117,6 +123,7 @@
     },
     {
       "id": 7,
+      "companyFantasyName": "Colégio Anglo-Americano",
       "cnpj": "10457626000185",
       "companyAddressStreet": "AVENIDA DAS AMERICAS 2603",
       "companyAddressDistrict": "BARRA DA TIJUCA",
@@ -135,6 +142,7 @@
     },
     {
       "id": 8,
+      "companyFantasyName": "Universidade Paulista",
       "cnpj": "06099229000101",
       "companyAddressStreet": "AVENIDA PAULISTA 900",
       "companyAddressDistrict": "BELA VISTA",
@@ -153,6 +161,7 @@
     },
     {
       "id": 9,
+      "companyFantasyName": "ACER",
       "cnpj": "86912086000144",
       "companyAddressStreet": "RUA JOAO ANTONIO DE ARAUJO 427",
       "companyAddressDistrict": "ELDORADO",
@@ -167,6 +176,43 @@
       "companyPhoneCode": "11",
       "companyPhone": "40491-888",
       "companyBirthDate": "1994-01-24",
+      "companyHomePage": ""
+    },
+    {
+      "id": 10,
+      "cnpj": "72381189000110",
+      "companyAddressStreet": "AVENIDA INDUSTRIAL BELGRAF 400",
+      "companyAddressDistrict": "INDUSTRIAL",
+      "companyLegalName": "DELL COMPUTADORES DO BRASIL LTDA",
+      "companyType": "matriz",
+      "companyCEP": "92990-000",
+      "companyState": "Rio Grande do Sul",
+      "companyCityCode": "4306767",
+      "companyCity": "Eldorado do Sul",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "51",
+      "companyPhone": "32745-500",
+      "companyBirthDate": "1993-06-24",
+      "companyHomePage": ""
+    },
+    {
+      "id": 11,
+      "cnpj": "17783890000158",
+      "companyAddressStreet": "RUA GEORGE OHM 206",
+      "companyAddressDistrict": "CIDADE MONCOES",
+      "companyFantasyName": "NVIDIA",
+      "companyLegalName": "NVIDIA BRASIL COMPUTACAO VISUAL LTDA.",
+      "companyType": "matriz",
+      "companyCEP": "04576-020",
+      "companyState": "São Paulo",
+      "companyCityCode": "3550308",
+      "companyCity": "São Paulo",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "11",
+      "companyPhone": "31507000",
+      "companyBirthDate": "2012-12-17",
       "companyHomePage": ""
     }
   ]

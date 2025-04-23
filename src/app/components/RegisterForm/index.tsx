@@ -13,7 +13,7 @@ import BtnBack from '../BtnBack';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
-    companyName: zod.string().min(1, { message: 'Informe o nome da empresa' }),
+    companyFantasyName: zod.string().min(1, { message: 'Informe o nome da empresa' }),
     companyAddressStreet: zod.string().min(1, { message: 'Informe o endereço da empresa' }),
     companyAddressDistrict: zod.string().min(1, { message: 'Informe o número do endereço da empresa' }),
     companyLegalName: zod.string().min(1, { message: 'Informe o nome fantasia da empresa' }),
@@ -33,7 +33,7 @@ const registerFormSchema = zod.object({
 
 interface NewRegisterFormInputs {
     cnpj: string;
-    companyName: string;
+    companyFantasyName: string;
     companyAddressStreet: string;
     companyAddressDistrict: string;
     companyLegalName: string;
@@ -76,7 +76,7 @@ export default function RegisterForm() {
     });
 
     function mapCNPJDataToForm(data: any, setValue: any) {
-        setValue('companyName', data?.razao_social ?? '');
+        setValue('companyLegalName', data?.razao_social ?? '');
         setValue('companyAddressStreet',
             [
                 data?.estabelecimento?.tipo_logradouro,
@@ -88,7 +88,7 @@ export default function RegisterForm() {
                 .trim()
         )
         setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
-        setValue('companyLegalName', data?.estabelecimento?.nome_fantasia ?? '');
+        setValue('companyFantasyName', data?.estabelecimento?.nome_fantasia ?? '');
         setValue('companyType', data?.estabelecimento?.tipo?.toLowerCase() ?? '');
         setValue('companyCEP', String(data?.estabelecimento?.cep ?? ''));
         setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
@@ -169,6 +169,7 @@ export default function RegisterForm() {
             cnpj: cleanedCNPJ,
             companyAddressStreet: data.companyAddressStreet,
             companyAddressDistrict: data.companyAddressDistrict,
+            companyFantasyName: data.companyFantasyName,
             companyLegalName: data.companyLegalName,
             companyType: data.companyType,
             companyCEP: data.companyCEP,

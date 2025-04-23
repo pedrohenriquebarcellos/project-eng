@@ -4,7 +4,7 @@ interface AddressFieldsProps {
     register: any;
     errors: { 
         companyAddressStreet?: { message?: string }; 
-        companyName?: { message?: string }; 
+        companyFantasyName?: { message?: string }; 
         companyLegalName?: { message?: string }; 
         companyType?: { message?: string }; 
         companyAddressDistrict?: { message?: string };
@@ -15,15 +15,15 @@ export default function AddressInfo({ register, errors}: AddressFieldsProps) {
     return (
         <>
             <div className={styles.groupFields}>
-                <label htmlFor="companyName" className={styles.required}>Nome da Empresa</label>
+                <label htmlFor="companyLegalName" className={styles.required}>Nome da Empresa</label>
                 <input 
                     type="text" 
                     placeholder="Nome da Empresa" 
-                    {...register('companyName')}
+                    {...register('companyLegalName')}
                 />
                 <span className={styles.errorMessage}>
-                    {errors.companyName?.message && (
-                        errors.companyName.message
+                    {errors.companyLegalName?.message && (
+                        errors.companyLegalName.message
                     )}
                 </span>
             </div>
@@ -57,15 +57,15 @@ export default function AddressInfo({ register, errors}: AddressFieldsProps) {
             </div>                    
             <div className={styles.groupFields}>
                 <div className={styles.fieldsWrapper2}>
-                    <label htmlFor="companyLegalName" className={styles.required}>Nome Fantasia</label>
+                    <label htmlFor="companyFantasyName" className={styles.required}>Nome Fantasia</label>
                     <input 
                         type="text" 
                         placeholder="Nome Fantasia" 
-                        {...register('companyLegalName')}
+                        {...register('companyFantasyName')}
                     />
                     <span className={styles.errorMessage}>
-                        {errors.companyLegalName?.message && (
-                            errors.companyLegalName.message
+                        {errors.companyFantasyName?.message && (
+                            errors.companyFantasyName.message
                         )}
                     </span>                        
                 </div>                        

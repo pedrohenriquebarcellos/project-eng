@@ -3,7 +3,7 @@ import { api } from "@/lib/axios";
 export type Company = {
     id: number;
     cnpj: string;
-    companyName: string;
+    companyFantasyName: string;
     companyAddressStreet: string;
     companyAddressDistrict: string;
     companyLegalName: string;

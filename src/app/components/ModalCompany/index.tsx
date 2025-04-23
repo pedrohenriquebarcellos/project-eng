@@ -16,7 +16,7 @@ export default function CompanyModal({ company, onClose }: Props) {
         <ul className={styles.modalWrapper}>
           <li><strong>ID:</strong> {company.id}</li>
           <li><strong>CNPJ:</strong> {company.cnpj}</li>
-          <li><strong>Nome Fantasia:</strong> {company.companyName}</li>
+          <li><strong>Nome Fantasia:</strong> {company.companyFantasyName}</li>
           <li><strong>Razão Social:</strong> {company.companyLegalName}</li>
           <li><strong>Endereço:</strong> {company.companyAddressStreet}</li>
           <li><strong>Bairro:</strong> {company.companyAddressDistrict}</li>

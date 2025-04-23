@@ -5,23 +5,101 @@ import getCompanies, { Company } from "@/app/components/GetCompanies";
 import styles from './listCompanies.module.css';
 import { Spinner } from "phosphor-react";
 import CompanyModal from "../components/ModalCompany";
+import Paginator from "../components/Paginator";
 
 export default function ListPage() {
     const [companies, setCompanies] = useState<Company[]>([]);
+    const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
     const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-    const [isLoading, isSetLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [inputPage, setInputPage] = useState<string>('...');
+    const [isInputVisible, setIsInputVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const companiesPerPage = 5;
 
     useEffect(() => {
         const fetchCompanies = async () => {
             const data = await getCompanies();
             setCompanies(data);
+            setFilteredCompanies(data);
+            setIsLoading(false);
         };
         fetchCompanies();
     }, []);
 
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+        if (query === '') {
+            setFilteredCompanies(companies);
+        } else {
+            const lowerQuery = query.toLowerCase();
+            const filtered = companies.filter((company) => 
+                company.cnpj.toLowerCase().includes(lowerQuery) ||
+                company.companyLegalName.toLowerCase().includes(lowerQuery) ||
+                company.companyCity.toLowerCase().includes(lowerQuery)
+            );
+            setFilteredCompanies(filtered);
+        }
+    };
+
+    const indexOfLastCompany = currentPage * companiesPerPage;
+    const indexOfFirstCompany = indexOfLastCompany - companiesPerPage;
+    const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
+
+    const totalPages = Math.ceil(filteredCompanies.length / companiesPerPage);
+
+    const goToPage = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+            setIsInputVisible(false);
+            setInputPage(String(page));
+        }
+    };
+
+    const goToNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleDotsClick = () => {
+        setIsInputVisible(true);
+        setInputPage('');
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (value === '' || /^[0-9]*$/.test(value)) {
+            setInputPage(value);
+        }
+    };
+
+    const handleInputSubmit = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            const page = parseInt(inputPage, 10);
+            goToPage(page);
+        }
+    };
+
     return (
         <section className={styles.wrapper}>
-            {companies.length > 0 ? (
+            <input
+                type="text"
+                placeholder="Pesquisar por CNPJ, Nome ou Cidade"
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                className={styles.searchInput}
+            />
+            
+            {filteredCompanies.length > 0 ? (
                 <>
                     <ul className={styles.rowHeader}>
                         <li>ID</li>
@@ -30,7 +108,7 @@ export default function ListPage() {
                         <li>Cidade</li>
                     </ul>
 
-                    {companies.map((company) => (
+                    {currentCompanies.map((company) => (
                         <ul
                             key={company.id}
                             className={styles.row}
@@ -47,6 +125,20 @@ export default function ListPage() {
                     {selectedCompany && (
                         <CompanyModal company={selectedCompany} onClose={() => setSelectedCompany(null)} />
                     )}
+
+                    <Paginator
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        goToPage={goToPage}
+                        goToNextPage={goToNextPage}
+                        goToPreviousPage={goToPreviousPage}
+                        isInputVisible={isInputVisible}
+                        inputPage={inputPage}
+                        setInputPage={setInputPage}
+                        handleInputChange={handleInputChange}
+                        handleInputSubmit={handleInputSubmit}
+                        handleDotsClick={handleDotsClick}
+                    />
                 </>
             ) : (
                 <>
@@ -62,4 +154,3 @@ export default function ListPage() {
         </section>
     );
 }
-

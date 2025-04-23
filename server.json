@@ -150,6 +150,24 @@
       "companyPhone": "31703-700",
       "companyBirthDate": "2004-02-04",
       "companyHomePage": ""
+    },
+    {
+      "id": 9,
+      "cnpj": "86912086000144",
+      "companyAddressStreet": "RUA JOAO ANTONIO DE ARAUJO 427",
+      "companyAddressDistrict": "ELDORADO",
+      "companyLegalName": "Acer Do Brasil",
+      "companyType": "matriz",
+      "companyCEP": "09972-001",
+      "companyState": "São Paulo",
+      "companyCityCode": "3513801",
+      "companyCity": "Diadema",
+      "companyRegion": "",
+      "companyCountry": "Brasil",
+      "companyPhoneCode": "11",
+      "companyPhone": "40491-888",
+      "companyBirthDate": "1994-01-24",
+      "companyHomePage": ""
     }
   ]
 }

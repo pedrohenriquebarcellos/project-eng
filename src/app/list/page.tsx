@@ -104,7 +104,6 @@ export default function ListPage() {
                     <ul className={styles.rowHeader}>
                         <li>ID</li>
                         <li>Loja:</li>
-                        <li>Tipo:</li>
                         <li>CNPJ</li>
                         <li>Nome</li>
                         <li>Cidade</li>
@@ -119,7 +118,6 @@ export default function ListPage() {
                         >
                             <li className={styles.cell} data-label="ID">{company.id}</li>
                             <li className={styles.cell} data-label="Nº Loja">{company.companyStoreIdNumber}</li>
-                            <li className={styles.cell} data-label="Tipo">{company.companyType}</li>
                             <li className={styles.cell} data-label="CNPJ">{company.cnpj}</li>
                             <li className={styles.cell} data-label="Nome">{company.companyFantasyName}</li>
                             <li className={styles.cell} data-label="Cidade">{company.companyCity}</li>

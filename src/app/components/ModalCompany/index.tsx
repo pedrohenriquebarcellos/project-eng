@@ -14,6 +14,17 @@ export default function CompanyModal({ company, onClose }: Props) {
     console.log(response.data); 
   }
 
+  const companyTypeDescription = {
+    "f": "Cons. Final",
+    "l": "Produtor Rural",
+    "r": "Revendedor",
+    "S": "Solidário",
+    "x": "Exportação"
+  }
+
+  console.log(company.companyType);
+  console.log(companyTypeDescription[company.companyType]);
+
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -27,12 +38,13 @@ export default function CompanyModal({ company, onClose }: Props) {
           <li><strong>Endereço:</strong> {company.companyAddressStreet}</li>
           <li><strong>Bairro:</strong> {company.companyAddressDistrict}</li>
           <li><strong>Número da Loja:</strong> {company.companyStoreIdNumber}</li>
-          <li><strong>Tipo:</strong> {company.companyType}</li>
+          <li><strong>Tipo:</strong> {companyTypeDescription[company.companyType]}</li>
           <li><strong>CEP:</strong> {company.companyCEP}</li>
           <li><strong>Estado:</strong> {company.companyState}</li>
           <li><strong>Cidade:</strong> {company.companyCity}</li>
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Região:</strong> {company.companyRegion || "Não informado"}</li>
-          <li><strong>País:</strong> {company.companyCountry}</li>
+          <li><strong>País:</strong> {company.companyCountryDescription}</li>
+          <li><strong>Código do País:</strong> {company.companyCountryId}</li>
           <li><strong>Telefone:</strong> ({company.companyPhoneCode}) {company.companyPhone}</li>
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Data de Abertura:</strong> {company.companyBirthDate || "Não informado"}</li>
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Site:</strong> {company.companyHomePage || "Não informado"}</li>

@@ -13,21 +13,22 @@ import BtnBack from '../BtnBack';
 
 const registerFormSchema = zod.object({
     cnpj: zod.string().min(18, { message: 'CNPJ inválido' }),
-    companyFantasyName: zod.string().min(1, { message: 'Informe o nome da empresa' }),
-    companyAddressStreet: zod.string().min(1, { message: 'Informe o endereço da empresa' }),
-    companyAddressDistrict: zod.string().min(1, { message: 'Informe o número do endereço da empresa' }),
-    companyLegalName: zod.string().min(1, { message: 'Informe o nome fantasia da empresa' }),
+    companyFantasyName: zod.string().min(1, { message: 'Informe o nome' }),
+    companyAddressStreet: zod.string().min(1, { message: 'Informe o endereço' }),
+    companyAddressDistrict: zod.string().min(1, { message: 'Informe o número do endereço' }),
+    companyLegalName: zod.string().min(1, { message: 'Informe o nome fantasia' }),
 
-    companyType: zod.string().min(1, { message: 'Informe o tipo da empresa' }),
-    companyCEP: zod.string().min(9, { message: 'Informe o CEP da empresa' }),
-    companyState: zod.string().min(1, { message: 'Informe o estado da empresa' }),
-    companyCityCode: zod.string().min(1, { message: 'Informe o código da cidade da empresa' }),
-    companyCity: zod.string().min(1, { message: 'Informe a cidade da empresa' }),
+    companyType: zod.string().max(1, { message: 'Informe o tipo' }),
+    companyCEP: zod.string().min(8, { message: 'Informe o CEP' }),
+    companyState: zod.string().min(1, { message: 'Informe o estado' }),
+    companyCityCode: zod.string().min(1, { message: 'Informe o código da cidade' }),
+    companyCity: zod.string().min(1, { message: 'Informe a cidade' }),
     companyRegion: zod.string().min(0),
-    companyCountry: zod.string().min(0, { message: 'Informe o país da empresa' }),
-    companyPhoneCode: zod.string().min(1, { message: 'Informe o código do telefone da empresa' }),
-    companyPhone: zod.string().min(1, { message: 'Informe o telefone da empresa' }),
-    companyBirthDate: zod.string().min(1, { message: 'Informe a data de nascimento da empresa' }),
+    companyCountryDescription: zod.string().min(0, { message: 'Informe o país' }),
+    companyCountryId: zod.string().min(0, { message: 'Informe o código do país' }),
+    companyPhoneCode: zod.string().min(1, { message: 'Informe o código do telefone' }),
+    companyPhone: zod.string().min(1, { message: 'Informe o telefone' }),
+    companyBirthDate: zod.string().min(1, { message: 'Informe a data de abertura' }),
     companyHomePage: zod.string().min(0),
 })
 
@@ -43,7 +44,8 @@ interface NewRegisterFormInputs {
     companyCityCode: string;
     companyCity: string;
     companyRegion: string;
-    companyCountry: string;
+    companyCountryDescription: string;
+    companyCountryId: string;
     companyPhoneCode: string;
     companyPhone: string;
     companyBirthDate: string;
@@ -76,6 +78,7 @@ export default function RegisterForm() {
     });
 
     function mapCNPJDataToForm(data: any, setValue: any) {
+        console.log('CNPJ data:', data);
         setValue('companyLegalName', data?.razao_social ?? '');
         setValue('companyAddressStreet',
             [
@@ -94,7 +97,8 @@ export default function RegisterForm() {
         setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
         setValue('companyCityCode', String(data?.estabelecimento?.cidade?.ibge_id ?? ''));
         setValue('companyCity', data?.estabelecimento?.cidade?.nome ?? '');
-        setValue('companyCountry', data?.estabelecimento?.pais?.nome ?? '');
+        setValue('companyCountryDescription', data?.estabelecimento?.pais?.nome ?? '');
+        setValue('companyCountryId', data?.estabelecimento?.pais?.id ?? '');
         setValue('companyPhoneCode', data?.estabelecimento?.ddd1 ?? '');
         setValue('companyPhone', data?.estabelecimento?.telefone1 ?? '');
         setValue('companyBirthDate', data?.estabelecimento?.data_inicio_atividade ?? '');
@@ -193,7 +197,8 @@ export default function RegisterForm() {
             companyCityCode: data.companyCityCode,
             companyCity: data.companyCity,
             companyRegion: data.companyRegion,
-            companyCountry: data.companyCountry,
+            companyCountryDescription: data.companyCountryDescription,
+            companyCountryId: data.companyCountryId,
             companyPhoneCode: data.companyPhoneCode,
             companyPhone: data.companyPhone,
             companyBirthDate: data.companyBirthDate,

@@ -8,7 +8,8 @@ interface FormValues {
     companyCityCode?: string;
     companyCity?: string;
     companyRegion?: string;
-    companyCountry?: string;
+    companyCountryDescription?: string;
+    companyCountryId?: string;
     companyPhoneCode?: string;
     companyPhone?: string;
     companyBirthDate?: string;
@@ -96,11 +97,19 @@ export default function CompanyInfo({ register, control, errors }: CompanyInfoPr
                     />
                 </div>
                 <div className={styles.fieldsWrapper}>
-                    <label htmlFor="companyCountry">País da Empresa</label>
+                    <label htmlFor="companyCountryDescription">País</label>
                     <input
                         type="text"
                         placeholder="País"      
-                        {...register('companyCountry')}
+                        {...register('companyCountryDescription')}
+                    />
+                </div>
+                <div className={styles.fieldsWrapper}>
+                    <label htmlFor="companyCountryId">Código do País</label>
+                    <input
+                        type="text"
+                        placeholder="Código do País"      
+                        {...register('companyCountryId')}
                     />
                 </div>
             </div>

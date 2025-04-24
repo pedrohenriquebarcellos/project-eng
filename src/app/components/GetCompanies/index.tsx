@@ -1,5 +1,7 @@
 import { api } from "@/lib/axios";
 
+type CompanyType = "f" | "l" | "r" | "S" | "x";
+
 export type Company = {
     id: number;
     cnpj: string;
@@ -8,13 +10,14 @@ export type Company = {
     companyAddressDistrict: string;
     companyLegalName: string;
     companyStoreIdNumber: number;
-    companyType: string;
+    companyType: CompanyType;
     companyCEP: string;
     companyState: string;
     companyCityCode: string;
     companyCity: string;
     companyRegion: string;
-    companyCountry: string;
+    companyCountryDescription: string;
+    companyCountryId: string;
     companyPhoneCode: string;
     companyPhone: string;
     companyBirthDate: string;

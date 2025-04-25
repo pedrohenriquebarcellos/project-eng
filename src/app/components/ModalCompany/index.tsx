@@ -2,6 +2,7 @@ import { Company } from "@/app/components/GetCompanies";
 import styles from "./modalCompany.module.css";
 import { X } from "phosphor-react";
 import { api } from "@/lib/axios";
+import { useRouter } from "next/navigation";
 
 type Props = {
   company: Company;
@@ -9,9 +10,9 @@ type Props = {
 };
 
 export default function CompanyModal({ company, onClose }: Props) {
+  const router = useRouter()
   async function handleRequestCompanyId(id: number) {
     const response = await api.get(`/companies/${id}`);
-    console.log(response.data); 
   }
 
   const companyTypeDescription = {
@@ -22,9 +23,6 @@ export default function CompanyModal({ company, onClose }: Props) {
     "x": "Exportação"
   }
 
-  console.log(company.companyType);
-  console.log(companyTypeDescription[company.companyType]);
-
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -33,6 +31,7 @@ export default function CompanyModal({ company, onClose }: Props) {
         <ul className={styles.modalWrapper}>
           <li><strong>ID:</strong> {company.id}</li>
           <li><strong>CNPJ:</strong> {company.cnpj}</li>
+          <li><strong>Ativa:</strong> {company.isActive ? "Ativa" : "Inativa"}</li>
           <li><strong>Nome Fantasia:</strong> {company.companyFantasyName}</li>
           <li><strong>Razão Social:</strong> {company.companyLegalName}</li>
           <li><strong>Endereço:</strong> {company.companyAddressStreet}</li>
@@ -49,11 +48,11 @@ export default function CompanyModal({ company, onClose }: Props) {
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Data de Abertura:</strong> {company.companyBirthDate || "Não informado"}</li>
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Site:</strong> {company.companyHomePage || "Não informado"}</li>
         </ul>
-        <button onClick={async () => {
-          await handleRequestCompanyId(company.id)
-        }}>
-          Edit
-        </button>
+        <div className={styles.actionsContainer}>
+          <button onClick={() => router.push(`/edit/${company.id}`)}>
+            Edit
+          </button>
+        </div>        
       </div>
     </div>
   );

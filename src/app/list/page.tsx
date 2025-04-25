@@ -6,6 +6,7 @@ import styles from './listCompanies.module.css';
 import { Spinner } from "phosphor-react";
 import CompanyModal from "../components/ModalCompany";
 import Paginator from "../components/Paginator";
+import BtnBack from "../components/BtnBack";
 
 export default function ListPage() {
     const [companies, setCompanies] = useState<Company[]>([]);
@@ -107,6 +108,7 @@ export default function ListPage() {
                         <li>CNPJ</li>
                         <li>Nome</li>
                         <li>Cidade</li>
+                        <li>Ativo</li>
                     </ul>
 
                     {currentCompanies.map((company) => (
@@ -121,6 +123,9 @@ export default function ListPage() {
                             <li className={styles.cell} data-label="CNPJ">{company.cnpj}</li>
                             <li className={styles.cell} data-label="Nome">{company.companyFantasyName}</li>
                             <li className={styles.cell} data-label="Cidade">{company.companyCity}</li>
+                            <li className={styles.cell} data-label="Ativo">
+                                {company.isActive ? 'Ativa' : 'Inativa'}
+                            </li>
                         </ul>
                     ))}
 
@@ -153,6 +158,7 @@ export default function ListPage() {
                     )}
                 </>
             )}
+            <BtnBack href="/dashboard" />
         </section>
     );
 }

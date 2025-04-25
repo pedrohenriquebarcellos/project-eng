@@ -160,7 +160,7 @@ export default function RegisterForm() {
             company.cnpj.substring(0, 8) === firstEightNumbersOfCnpj
         );
 
-        return (existingCompanies === 0) ? 1 : existingCompanies.length + 1; 
+        return existingCompanies.length === 0 ? 1 : existingCompanies.length + 1;
     }
 
     async function handleCreateNewRegister(data: NewRegisterFormInputs) {
@@ -203,6 +203,7 @@ export default function RegisterForm() {
             companyPhone: data.companyPhone,
             companyBirthDate: data.companyBirthDate,
             companyHomePage: data.companyHomePage,
+            isActive: true
         })
 
         await new Promise((resolve) => setTimeout(resolve, 3000))

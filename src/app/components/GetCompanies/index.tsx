@@ -22,6 +22,7 @@ export type Company = {
     companyPhone: string;
     companyBirthDate: string;
     companyHomePage: string;
+    isActive: boolean;
 }
 
 export default async function getCompanies() {

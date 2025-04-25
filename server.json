@@ -26,7 +26,8 @@
       "companyPhoneCode": "16",
       "companyPhone": "37112-002",
       "companyBirthDate": "1966-10-24",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 2,
@@ -45,9 +46,10 @@
       "companyCountryDescription": "Brasil",
       "companyCountryId": "1058",
       "companyPhoneCode": "11",
-      "companyPhone": "36870-000",
+      "companyPhone": "3687-0000",
       "companyBirthDate": "1980-09-23",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 3,
@@ -68,7 +70,8 @@
       "companyPhoneCode": "21",
       "companyPhone": "21554-551",
       "companyBirthDate": "1986-01-31",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 4,
@@ -89,7 +92,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "37695-731",
       "companyBirthDate": "1972-06-22",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 5,
@@ -98,7 +102,7 @@
       "companyAddressStreet": "RUA DOS ANDRADAS 140",
       "companyAddressDistrict": "SANTA EFIGENIA",
       "companyLegalName": "ADMINISTRACAO CENTRAL",
-      "companyStoreIdNumber": 1,
+      "companyStoreIdNumber": "1",
       "companyType": "s",
       "companyCEP": "01208-000",
       "companyState": "São Paulo",
@@ -110,7 +114,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "33243-571",
       "companyBirthDate": "1970-06-04",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": "false"
     },
     {
       "id": 6,
@@ -131,7 +136,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "31703-633",
       "companyBirthDate": "1971-09-15",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 7,
@@ -152,7 +158,8 @@
       "companyPhoneCode": "21",
       "companyPhone": "33889-100",
       "companyBirthDate": "2008-10-21",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 8,
@@ -173,7 +180,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "31703-700",
       "companyBirthDate": "2004-02-04",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 9,
@@ -194,7 +202,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "40491-888",
       "companyBirthDate": "1994-01-24",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 10,
@@ -214,7 +223,8 @@
       "companyPhoneCode": "51",
       "companyPhone": "32745-500",
       "companyBirthDate": "1993-06-24",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 11,
@@ -235,7 +245,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "31507000",
       "companyBirthDate": "2012-12-17",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 12,
@@ -256,7 +267,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "43905-100",
       "companyBirthDate": "1961-03-24",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 13,
@@ -277,7 +289,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "43905-781",
       "companyBirthDate": "2013-07-03",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": true
     },
     {
       "id": 14,
@@ -298,7 +311,8 @@
       "companyPhoneCode": "11",
       "companyPhone": "30412-959",
       "companyBirthDate": "2013-09-10",
-      "companyHomePage": ""
+      "companyHomePage": "",
+      "isActive": false
     }
   ]
 }

@@ -17,7 +17,7 @@ export default function ListPage() {
     const [inputPage, setInputPage] = useState<string>('...');
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const companiesPerPage = 5;
+    const companiesPerPage = 10;
 
     useEffect(() => {
         const fetchCompanies = async () => {

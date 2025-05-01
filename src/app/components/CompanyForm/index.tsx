@@ -33,6 +33,7 @@ export default function CompanyForm({ company }: Props) {
 
     const onSubmit = async (data: CompanyFormData) => {
         setIsLoading(true);
+        console.log("Dados do formulário:", data);
 
         await new Promise(resolve => setTimeout(resolve, 1000));
         try {
@@ -52,15 +53,14 @@ export default function CompanyForm({ company }: Props) {
     };
 
     return (
-        <>
-            {success && (
-                <div className={styles.successMessage}>
-                    Empresa atualizada com sucesso!
-                </div>
-            )}
-
-            <BtnBack href="/dashboard" />
+        <div className={styles.pageWrapper}> 
+            <BtnBack href="/list" />
             <form onSubmit={handleSubmit(onSubmit)}>
+                {success && (
+                    <div className={styles.successMessage}>
+                        Empresa atualizada com sucesso!
+                    </div>
+                )}
                 {isLoading && (
                     <div className={styles.overlay}>
                         <Spinner size={48} className={styles.spinner} />
@@ -195,6 +195,6 @@ export default function CompanyForm({ company }: Props) {
                     </div>
                 </fieldset>
             </form>
-        </>        
+        </div>        
     );
 }

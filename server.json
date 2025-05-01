@@ -115,7 +115,7 @@
       "companyPhone": "33243-571",
       "companyBirthDate": "1970-06-04",
       "companyHomePage": "",
-      "isActive": "false"
+      "isActive": false
     },
     {
       "id": 6,
@@ -163,13 +163,13 @@
     },
     {
       "id": 8,
-      "companyFantasyName": "Universidade Paulista",
+      "companyFantasyName": "Universidade Paulistaa",
       "cnpj": "06099229000101",
       "companyAddressStreet": "AVENIDA PAULISTA 900",
       "companyAddressDistrict": "BELA VISTA",
       "companyLegalName": "UNIVERSIDADE PAULISTA - UNIP",
       "companyStoreIdNumber": 1,
-      "companyType": "s",
+      "companyType": "f",
       "companyCEP": "01310-100",
       "companyState": "São Paulo",
       "companyCityCode": "3550308",
@@ -224,7 +224,8 @@
       "companyPhone": "32745-500",
       "companyBirthDate": "1993-06-24",
       "companyHomePage": "",
-      "isActive": true
+      "isActive": true,
+      "companyFantasyName": "Dell"
     },
     {
       "id": 11,

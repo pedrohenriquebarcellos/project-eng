@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 
-type CompanyType = "f" | "l" | "r" | "S" | "x";
+type CompanyType = "f" | "l" | "r" | "s" | "x";
 
 export type Company = {
     id: number;

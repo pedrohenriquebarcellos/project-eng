@@ -19,7 +19,7 @@ export default function CompanyModal({ company, onClose }: Props) {
     "f": "Cons. Final",
     "l": "Produtor Rural",
     "r": "Revendedor",
-    "S": "Solidário",
+    "s": "Solidário",
     "x": "Exportação"
   }
 
@@ -50,7 +50,7 @@ export default function CompanyModal({ company, onClose }: Props) {
         </ul>
         <div className={styles.actionsContainer}>
           <button onClick={() => router.push(`/edit/${company.id}`)}>
-            Edit
+            Editar Cadastro
           </button>
         </div>        
       </div>

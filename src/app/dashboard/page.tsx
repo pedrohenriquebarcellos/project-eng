@@ -16,12 +16,6 @@ export default function Dashboard() {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/edit">
-                            <Pen size={48} />
-                            <span>Editar Cadastro</span>
-                        </Link>
-                    </li>
-                    <li>
                         <Link href="/list">
                             <UsersThree size={48} />
                             <span>Listar</span>

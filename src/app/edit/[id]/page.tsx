@@ -52,6 +52,4 @@ export default function CompanyDetailsPage() {
             <p>Site: {company.companyHomePage || 'Não informado'}</p>
         </div>
     )
-
-    return <CompanyForm company={company} />;
 }

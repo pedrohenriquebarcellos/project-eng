@@ -1,19 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';  // Use o useParams do Next.js
 import { api } from '@/lib/axios';
-import CompanyForm from '@/app/components/CompanyForm';
 import { Company } from '@/app/components/GetCompanies';
 
 export default function CompanyDetailsPage() {
-    const params = useParams();
-    const id = params.id as string;
-
+    const { id } = useParams();  // UseParams devolve um objeto com os parâmetros da URL
     const [company, setCompany] = useState<Company | null>(null);
     const [error, setError] = useState(false);
 
     useEffect(() => {
+        if (!id) {
+            return;  // Caso o id não seja encontrado, não faz a requisição
+        }
+
         async function fetchCompany() {
             try {
                 const response = await api.get(`/companies/${id}`);
@@ -28,7 +29,7 @@ export default function CompanyDetailsPage() {
     }, [id]);
 
     if (error) return <div>Empresa não encontrada</div>;
-    if (!company) return <div></div>;
+    if (!company) return <div>Carregando...</div>;  // Enquanto a empresa não é carregada
 
     return (
         <div>
@@ -51,5 +52,5 @@ export default function CompanyDetailsPage() {
             <p>Data de Abertura: {company.companyBirthDate || 'Não informado'}</p>
             <p>Site: {company.companyHomePage || 'Não informado'}</p>
         </div>
-    )
+    );
 }

@@ -138,8 +138,8 @@ export default function CompanyForm({ company }: Props) {
 
                     <div className={styles.groupFields}>
                         <div className={styles.fieldsWrapper}>
-                            <label htmlFor="companyCEP">CEP</label>
-                            <input type="text" {...register('companyCEP')} />
+                            <label htmlFor="companyCep">CEP</label>
+                            <input type="text" {...register('companyCep')} />
                         </div>
                         <div className={styles.fieldsWrapper}>
                             <label htmlFor="companyState">Estado</label>

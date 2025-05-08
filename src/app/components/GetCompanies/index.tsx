@@ -11,7 +11,7 @@ export type Company = {
     companyLegalName: string;
     companyStoreIdNumber: number;
     companyType: CompanyType;
-    companyCEP: string;
+    companyCep: string;
     companyState: string;
     companyCityCode: string;
     companyCity: string;

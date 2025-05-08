@@ -38,7 +38,7 @@ export default function CompanyModal({ company, onClose }: Props) {
           <li><strong>Bairro:</strong> {company.companyAddressDistrict}</li>
           <li><strong>Número da Loja:</strong> {company.companyStoreIdNumber}</li>
           <li><strong>Tipo:</strong> {companyTypeDescription[company.companyType]}</li>
-          <li><strong>CEP:</strong> {company.companyCEP}</li>
+          <li><strong>CEP:</strong> {company.companyCep}</li>
           <li><strong>Estado:</strong> {company.companyState}</li>
           <li><strong>Cidade:</strong> {company.companyCity}</li>
           <li className={company.companyHomePage ? '' : styles.empty}><strong>Região:</strong> {company.companyRegion || "Não informado"}</li>

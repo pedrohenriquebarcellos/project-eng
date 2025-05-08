@@ -314,6 +314,28 @@
       "companyBirthDate": "2013-09-10",
       "companyHomePage": "",
       "isActive": false
+    },
+    {
+      "id": 15,
+      "cnpj": "05555382000133",
+      "companyStoreIdNumber": 1,
+      "companyAddressStreet": "RUA Rua Vergueiro 3195",
+      "companyAddressDistrict": "Vila Mariana",
+      "companyFantasyName": "Caelum/alura/casa do Codigo",
+      "companyLegalName": "AOVS SISTEMAS DE INFORMATICA S.A.",
+      "companyType": "r",
+      "companyCep": "04101-300",
+      "companyState": "São Paulo",
+      "companyCityCode": "3550308",
+      "companyCity": "São Paulo",
+      "companyRegion": "",
+      "companyCountryDescription": "Brasil",
+      "companyCountryId": "1058",
+      "companyPhoneCode": "11",
+      "companyPhone": "55712-751",
+      "companyBirthDate": "2003-02-18",
+      "companyHomePage": "",
+      "isActive": true
     }
   ]
 }

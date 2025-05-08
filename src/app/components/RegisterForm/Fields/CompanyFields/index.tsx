@@ -3,7 +3,7 @@ import { Controller, FieldErrors } from "react-hook-form";
 import { IMaskInput } from "react-imask";
 
 interface FormValues {
-    companyCEP?: string;
+    companyCep?: string;
     companyState?: string;
     companyCityCode?: string;
     companyCity?: string;
@@ -27,9 +27,9 @@ export default function CompanyInfo({ register, control, errors }: CompanyInfoPr
         <>
             <div className={styles.groupFields}>
                 <div className={styles.fieldsWrapper2}>
-                    <label htmlFor="companyCEP" className={styles.required}>CEP da Empresa</label>
+                    <label htmlFor="companyCep" className={styles.required}>CEP da Empresa</label>
                     <Controller 
-                        name="companyCEP"
+                        name="companyCep"
                         control={control}
                         render={({ field }) => (
                             <IMaskInput
@@ -42,8 +42,8 @@ export default function CompanyInfo({ register, control, errors }: CompanyInfoPr
                         )}
                     />
                     <span className={styles.errorMessage}>
-                        {errors.companyCEP?.message && (
-                            errors.companyCEP.message
+                        {errors.companyCep?.message && (
+                            errors.companyCep.message
                         )}
                     </span>
                 </div>

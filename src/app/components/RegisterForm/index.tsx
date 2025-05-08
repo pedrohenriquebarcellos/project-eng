@@ -19,7 +19,7 @@ const registerFormSchema = zod.object({
     companyLegalName: zod.string().min(1, { message: 'Informe o nome fantasia' }),
 
     companyType: zod.string().max(1, { message: 'Informe o tipo' }),
-    companyCEP: zod.string().min(8, { message: 'Informe o CEP' }),
+    companyCep: zod.string().min(8, { message: 'Informe o CEP' }),
     companyState: zod.string().min(1, { message: 'Informe o estado' }),
     companyCityCode: zod.string().min(1, { message: 'Informe o código da cidade' }),
     companyCity: zod.string().min(1, { message: 'Informe a cidade' }),
@@ -39,7 +39,7 @@ interface NewRegisterFormInputs {
     companyAddressDistrict: string;
     companyLegalName: string;
     companyType: string;
-    companyCEP: string;
+    companyCep: string;
     companyState: string;
     companyCityCode: string;
     companyCity: string;
@@ -93,7 +93,7 @@ export default function RegisterForm() {
         setValue('companyAddressDistrict', data?.estabelecimento?.bairro ?? '');
         setValue('companyFantasyName', data?.estabelecimento?.nome_fantasia ?? '');
         setValue('companyType', data?.estabelecimento?.tipo?.toLowerCase() ?? '');
-        setValue('companyCEP', String(data?.estabelecimento?.cep ?? ''));
+        setValue('companyCep', String(data?.estabelecimento?.cep ?? ''));
         setValue('companyState', data?.estabelecimento?.estado?.nome ?? '');
         setValue('companyCityCode', String(data?.estabelecimento?.cidade?.ibge_id ?? ''));
         setValue('companyCity', data?.estabelecimento?.cidade?.nome ?? '');
@@ -192,7 +192,7 @@ export default function RegisterForm() {
             companyFantasyName: data.companyFantasyName,
             companyLegalName: data.companyLegalName,
             companyType: data.companyType,
-            companyCEP: data.companyCEP,
+            companyCep: data.companyCep,
             companyState: data.companyState,
             companyCityCode: data.companyCityCode,
             companyCity: data.companyCity,

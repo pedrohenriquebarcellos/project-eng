@@ -1,25 +1,34 @@
-export const dynamic = "force-dynamic";
+'use client';
 
-import { notFound } from "next/navigation";
-import { api } from "@/lib/axios";
-import { Company } from "@/app/components/GetCompanies";
-import CompanyForm from "@/app/components/CompanyForm";
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { api } from '@/lib/axios';
+import CompanyForm from '@/app/components/CompanyForm';
+import { Company } from '@/app/components/GetCompanies';
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+export default function CompanyDetailsPage() {
+    const params = useParams();
+    const id = params.id as string;
 
-    try {
-        const response = await api.get(`/companies/${id}`);
-        const company: Company = response.data;
+    const [company, setCompany] = useState<Company | null>(null);
+    const [error, setError] = useState(false);
 
-        return <CompanyForm company={company} />;
-    } catch (error: any) {
-        console.error("Erro ao buscar empresa:", {
-            message: error.message,
-            code: error.code,
-            status: error.response?.status,
-            data: error.response?.data,
-            headers: error.response?.headers,
-        });
-    }
+    useEffect(() => {
+        async function fetchCompany() {
+            try {
+                const response = await api.get(`/companies/${id}`);
+                setCompany(response.data);
+            } catch (e) {
+                console.error('Erro ao buscar empresa:', e);
+                setError(true);
+            }
+        }
+
+        fetchCompany();
+    }, [id]);
+
+    if (error) return <div>Empresa não encontrada</div>;
+    if (!company) return <div></div>;
+
+    return <CompanyForm company={company} />;
 }

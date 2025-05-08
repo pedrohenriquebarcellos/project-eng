@@ -57,28 +57,22 @@ export default function LoginForm() {
       setLoginError('')
       setIsLoading(true)
 
-      const response = await api.get<User[]>('/users', {
-        params: {
-          userName: data.userName,
-        },
-      })
+      const response = await api.post('/auth/login', {
+        userName: data.userName,
+        password: data.password,
+      });
 
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      const { token, user } = response.data;
 
-      const user = response.data.find(
-        (user) => user.userName === data.userName && user.password === data.password
-      )
+      if (token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('userName', JSON.stringify(user.userName));
+        handleGetInitialsFromName(user.userName);
 
-      if (user) {
-        localStorage.setItem('userName', JSON.stringify(user.userName))
-        handleGetInitialsFromName(user.userName)
-
-        router.push('/dashboard')
-        return
+        router.push('/dashboard');
       } else {
-        setIsLoading(false)
-        setLoginError('Usuário ou senha inválidos')
-        reset()
+        setLoginError('Token inválido');
+        reset();
       }
     } catch (error: unknown) {
       let errorMessage: ErrorLoginFormMessage = { message: 'Erro ao fazer login' }

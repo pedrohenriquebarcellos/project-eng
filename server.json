@@ -336,6 +336,28 @@
       "companyBirthDate": "2003-02-18",
       "companyHomePage": "",
       "isActive": true
+    },
+    {
+      "id": 16,
+      "cnpj": "02131538000160",
+      "companyStoreIdNumber": 1,
+      "companyAddressStreet": "AVENIDA PRESIDENTE KENNEDY 2.869",
+      "companyAddressDistrict": "VILA SAO JOSE",
+      "companyFantasyName": "REDE TEV",
+      "companyLegalName": "TV OMEGA LTDA.",
+      "companyType": "l",
+      "companyCep": "06298-190",
+      "companyState": "São Paulo",
+      "companyCityCode": "3534401",
+      "companyCity": "Osasco",
+      "companyRegion": "",
+      "companyCountryDescription": "Brasil",
+      "companyCountryId": "1058",
+      "companyPhoneCode": "11",
+      "companyPhone": "33061-195",
+      "companyBirthDate": "1997-08-28",
+      "companyHomePage": "",
+      "isActive": true
     }
   ]
 }

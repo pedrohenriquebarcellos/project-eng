@@ -5,6 +5,8 @@ import StyledComponentsRegistry from "./registry";
 import Header from "./components/header";
 import '../styles/globals.css';
 import { LoginProvider } from "@/contexts/LoginContext";
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +36,18 @@ export default function RootLayout({
             <LoginProvider>
               <Header />
               {children}
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+              />
             </LoginProvider>
           </ThemeWrapper>
         </StyledComponentsRegistry>

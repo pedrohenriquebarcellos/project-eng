@@ -5,9 +5,8 @@ import { api } from "@/lib/axios";
 import { Company } from "@/app/components/GetCompanies";
 import CompanyForm from "@/app/components/CompanyForm";
 
-export default async function CompanyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
-    console.log("ID da empresa:", id);
+export default async function CompanyDetailsPage({ params }: { params: { id: string } }) {
+    const { id } = params;
 
     try {
         const response = await api.get(`/companies/${id}`);

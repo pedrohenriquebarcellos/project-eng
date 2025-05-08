@@ -8,25 +8,15 @@ import { Company } from "@/app/components/GetCompanies";
 import CompanyForm from "@/app/components/CompanyForm";
 import { notFound } from "next/navigation";
 import { Spinner } from "phosphor-react";
-import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function CompanyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-    const router = useRouter();
     const [company, setCompany] = useState<Company | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [id, setId] = useState<string | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [id, setId] = useState<string | null>(null);    
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {            
-            toast.error("Você precisa estar logado para acessar essa página.");
-            router.push("/");
-        } else {
-            setIsAuthenticated(true);
-        }
-    }, [router]);
+    const isAuthenticated = useAuth();
 
     useEffect(() => {
         params.then(({ id }) => setId(id));

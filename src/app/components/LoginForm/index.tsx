@@ -8,6 +8,7 @@ import { api } from '@/lib/axios'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { UserContext } from '@/contexts/LoginContext'
+import { toast } from "react-toastify"
 
 interface User {
   id: number
@@ -29,7 +30,6 @@ type LoginFormInputs = zod.infer<typeof loginFormSchema>
 export default function LoginForm() {
   const { handleGetInitialsFromName } = useContext(UserContext)
   const router = useRouter()
-  const [loginError, setLoginError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const {
@@ -54,7 +54,6 @@ export default function LoginForm() {
 
   async function handleLogin(data: LoginFormInputs) {
     try {
-      setLoginError('')
       setIsLoading(true)
 
       const response = await api.post('/auth/login', {
@@ -71,7 +70,7 @@ export default function LoginForm() {
 
         router.push('/dashboard');
       } else {
-        setLoginError('Token inválido');
+        toast.error('Token inválido')
         reset();
       }
     } catch (error: unknown) {
@@ -81,7 +80,7 @@ export default function LoginForm() {
         errorMessage = { message: error.message }
       }
 
-      setLoginError(errorMessage.message)
+      toast.error(errorMessage.message)
       setIsLoading(false)
       reset()
     }
@@ -107,12 +106,6 @@ export default function LoginForm() {
       />
       {errors.password?.message && (
         <span className={styles.errorMessage}>{errors.password.message}</span>
-      )}
-
-      {loginError && (
-        <span className={styles.errorMessage} style={{ color: 'red' }}>
-          {loginError}
-        </span>
       )}
 
       <div className={styles.spinner} style={{ display: 'none' }} />

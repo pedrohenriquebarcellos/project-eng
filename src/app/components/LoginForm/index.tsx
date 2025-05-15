@@ -56,17 +56,17 @@ export default function LoginForm() {
     try {
       setIsLoading(true)
 
-      const response = await api.post('/auth/login', {
+      const response = await api.post('/login', {
         userName: data.userName,
         password: data.password,
       });
 
-      const { token, user } = response.data;
+      const { token, userName } = response.data;
 
       if (token) {
         localStorage.setItem('token', token);
-        localStorage.setItem('userName', JSON.stringify(user.userName));
-        handleGetInitialsFromName(user.userName);
+        localStorage.setItem('userName', JSON.stringify(userName));
+        handleGetInitialsFromName(userName);
 
         router.push('/dashboard');
       } else {

@@ -14,6 +14,7 @@ export default function ListPage() {
     const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filterStatus, setFilterStatus] = useState<'active' | 'inactive' | 'all'>('all');
     const [inputPage, setInputPage] = useState<string>('...');
     const [isInputVisible, setIsInputVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -29,20 +30,36 @@ export default function ListPage() {
         fetchCompanies();
     }, []);
 
+    const applyFilters = (query: string, status: 'active' | 'inactive' | 'all') => {
+        const lowerQuery = query.toLowerCase();
+    
+        const filtered = companies.filter((company) => {
+            const matchesStatus =
+                status === 'all' ||
+                (status === 'active' && company.isActive) ||
+                (status === 'inactive' && !company.isActive);
+    
+            const matchesSearch =
+                company.cnpj.toLowerCase().includes(lowerQuery) ||
+                company.companyLegalName.toLowerCase().includes(lowerQuery) ||
+                company.companyCity.toLowerCase().includes(lowerQuery);
+    
+            return matchesStatus && matchesSearch;
+        });
+    
+        setFilteredCompanies(filtered);
+    };
+
     const handleSearch = (query: string) => {
         setSearchQuery(query);
         setCurrentPage(1);
-        if (query === '') {
-            setFilteredCompanies(companies);
-        } else {
-            const lowerQuery = query.toLowerCase();
-            const filtered = companies.filter((company) => 
-                company.cnpj.toLowerCase().includes(lowerQuery) ||
-                company.companyLegalName.toLowerCase().includes(lowerQuery) ||
-                company.companyCity.toLowerCase().includes(lowerQuery)
-            );
-            setFilteredCompanies(filtered);
-        }
+        applyFilters(query, filterStatus);
+    };
+
+    const handleStatusChange = (status: 'active' | 'inactive' | 'all') => {
+        setFilterStatus(status);
+        setCurrentPage(1);
+        applyFilters(searchQuery, status);
     };
 
     const indexOfLastCompany = currentPage * companiesPerPage;
@@ -92,14 +109,30 @@ export default function ListPage() {
 
     return (
         <section className={styles.wrapper}>
-            <input
-                type="text"
-                placeholder="Pesquisar por CNPJ, Fantasia ou Cidade"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                className={styles.searchInput}
-            />
-            
+            <div className={styles.filterContainer}>
+                <input
+                    type="text"
+                    placeholder="Pesquisar por CNPJ, Fantasia ou Cidade"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className={styles.searchInput}
+                />
+                <div className={styles.filters}>
+                    <select
+                        value={filterStatus}
+                        onChange={(e) => {
+                            const newStatus = e.target.value as 'active' | 'inactive';
+                            handleStatusChange(newStatus);
+                        }}
+                        className={styles.statusFilter}
+                    >
+                        <option value="active">Ativas</option>
+                        <option value="inactive">Inativas</option>
+                        <option value="all">Todas</option>
+                    </select>
+                </div>
+            </div>
+
             {filteredCompanies.length > 0 ? (
                 <>
                     <ul className={styles.rowHeader}>

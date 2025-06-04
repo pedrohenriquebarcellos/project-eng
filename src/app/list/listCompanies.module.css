@@ -111,3 +111,42 @@
   color: #7C7C8A;
   font-style: italic;
 }
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.filterContainer input {
+  flex: 1;
+}
+
+.filterContainer select {
+  height: 52px;
+  border-radius: 8px;
+  border: 1px solid #29292E; 
+  background: #202024; 
+  color: #E1E1E6;
+  padding: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

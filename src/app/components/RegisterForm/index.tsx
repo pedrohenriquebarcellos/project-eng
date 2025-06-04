@@ -169,7 +169,12 @@ export default function RegisterForm() {
         const cleanedCNPJ = data.cnpj.replace(/\D/g, '');
         const newId = await generateSequentialId();
 
-        const companies = await api.get(`/companies`);
+        const companies = await api.get('/companies', {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
         const existingCompany = companies.data.find((company: any) => company.cnpj === cleanedCNPJ);
 
         if (existingCompany) {
@@ -204,6 +209,10 @@ export default function RegisterForm() {
             companyBirthDate: data.companyBirthDate,
             companyHomePage: data.companyHomePage,
             isActive: true
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
         })
 
         await new Promise((resolve) => setTimeout(resolve, 3000))

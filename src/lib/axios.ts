@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 export const api = axios.create({
   //baseURL: 'https://projeto-eng-api.onrender.com'
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:8080",
 });
 
 export const cnpjApi = axios.create({

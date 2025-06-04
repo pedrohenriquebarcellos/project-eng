@@ -56,7 +56,7 @@ export default function LoginForm() {
     try {
       setIsLoading(true)
 
-      const response = await api.post('/login', {
+      const response = await api.post('/auth/login', {
         userName: data.userName,
         password: data.password,
       });
